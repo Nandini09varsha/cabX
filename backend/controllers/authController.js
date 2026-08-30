@@ -9,19 +9,29 @@ const generateToken = (userId) => {
 };
 
 // POST /api/auth/register
-// Body: { name, email, phone, password }
-// Creates a rider account by default. (Driver signup will be handled
-// separately by the teammate owning the driver side.)
+// Body: { name, email, phone, password, role }
 const register = async (req, res) => {
   try {
-    const { name, email, phone, password } = req.body;
+    const { name, email, phone, password, role } = req.body;
 
-    if (!name || !email || !phone || !password) {
-      return res.status(400).json({ message: "name, email, phone and password are required" });
+    if (!name || !email || !phone || !password || !role) {
+      return res.status(400).json({
+        message: "name, email, phone, password and role are required",
+      });
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
+      return res.status(400).json({
+        message: "Password must be at least 6 characters",
+      });
+    }
+
+    const allowedRoles = ["rider", "driver", "admin"];
+
+    if (!allowedRoles.includes(role)) {
+      return res.status(400).json({
+        message: "Invalid role",
+      });
     }
 
     const existingUser = await User.findOne({
@@ -29,7 +39,9 @@ const register = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(409).json({ message: "Email or phone already registered" });
+      return res.status(409).json({
+        message: "Email or phone already registered",
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -40,7 +52,7 @@ const register = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      role: "rider",
+      role,
     });
 
     const token = generateToken(user._id);
@@ -51,7 +63,10 @@ const register = async (req, res) => {
       user,
     });
   } catch (error) {
-    return res.status(500).json({ message: "Registration failed", error: error.message });
+    return res.status(500).json({
+      message: "Registration failed",
+      error: error.message,
+    });
   }
 };
 
@@ -62,7 +77,9 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "email and password are required" });
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -85,7 +102,9 @@ const login = async (req, res) => {
       user,
     });
   } catch (error) {
-    return res.status(500).json({ message: "Login failed", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Login failed", error: error.message });
   }
 };
 
