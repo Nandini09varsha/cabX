@@ -27,10 +27,18 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const register = async ({ name, email, phone, password }) => {
-    const res = await api.post("/auth/register", { name, email, phone, password });
+  const register = async ({ name, email, phone, password, role }) => {
+    const res = await api.post("/auth/register", {
+      name,
+      email,
+      phone,
+      password,
+      role,
+    });
+
     localStorage.setItem("cabx-token", res.data.token);
     setUser(res.data.user);
+
     return res.data.user;
   };
 
@@ -47,7 +55,9 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, register, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, setUser, loading, register, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
