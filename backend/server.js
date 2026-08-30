@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+import riderRoutes from "./routes/riderRoutes.js";
 
 dotenv.config();
 
@@ -18,6 +20,9 @@ app.get("/", (req, res) => {
     message: "CabX API is running 🚕",
   });
 });
+
+app.use("/api/auth", authRoutes);
+app.use("/api/rider", riderRoutes);
 
 const PORT = process.env.PORT || 5000;
 
