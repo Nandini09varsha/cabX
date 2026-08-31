@@ -22,8 +22,15 @@ function Login() {
     setLoading(true);
 
     try {
-      await login(form);
-      navigate("/rider");
+      const loggedInUser = await login(form);
+
+      if (loggedInUser.role === "driver") {
+        navigate("/driver");
+      } else if (loggedInUser.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/rider");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
@@ -39,7 +46,9 @@ function Login() {
         </h1>
 
         {error && (
-          <p className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</p>
+          <p className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">
+            {error}
+          </p>
         )}
 
         <form onSubmit={handleSubmit}>
@@ -67,7 +76,10 @@ function Login() {
 
         <p className="mt-5 text-center text-sm text-gray-500 dark:text-gray-400">
           New to CabX?{" "}
-          <Link to="/register" className="font-semibold text-[#0B0B0B] dark:text-[#F5C518]">
+          <Link
+            to="/register"
+            className="font-semibold text-[#0B0B0B] dark:text-[#F5C518]"
+          >
             Create an account
           </Link>
         </p>

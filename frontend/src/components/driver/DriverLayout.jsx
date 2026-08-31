@@ -240,7 +240,7 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
       {/* Main Content */}
       <main className="min-h-screen lg:ml-72">
         {/* Desktop Header */}
-        <header className="hidden h-20 items-center justify-between border-b border-gray-200 bg-white px-8 dark:border-[#2A2A2A] dark:bg-[#111111] lg:flex">
+        <header className="sticky top-0 z-50 hidden h-20 items-center justify-between border-b border-gray-200 bg-white px-8 dark:border-[#2A2A2A] dark:bg-[#111111] lg:flex">
           <div>
             <h2 className="text-xl font-bold">{activePage}</h2>
 
