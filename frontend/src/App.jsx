@@ -4,6 +4,14 @@ import Landing from "./pages/Landing";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RiderDashboard from "./pages/rider/RiderDashboard";
+import BookRide from "./pages/rider/BookRide";
+import CurrentRiderRide from "./pages/rider/CurrentRide";
+import RiderRideHistory from "./pages/rider/RideHistory";
+import RideDetails from "./pages/rider/RideDetails";
+import Payments from "./pages/rider/Payments";
+import Profile from "./pages/rider/Profile";
+import Settings from "./pages/rider/Settings";
+
 import DriverDashboard from "./pages/driver/DriverDashboard";
 import RideRequests from "./pages/driver/RideRequests";
 import CurrentRide from "./pages/driver/CurrentRide";
@@ -28,14 +36,77 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             {/* Rider */}
-            <Route
-              path="/rider"
-              element={
-                <ProtectedRoute role="rider">
-                  <RiderDashboard />
-                </ProtectedRoute>
-              }
-            />
+          <Route
+  path="/rider"
+  element={
+    <ProtectedRoute role="rider">
+      <RiderDashboard />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/book"
+  element={
+    <ProtectedRoute role="rider">
+      <BookRide />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/current-ride"
+  element={
+    <ProtectedRoute role="rider">
+      <CurrentRiderRide />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/history"
+  element={
+    <ProtectedRoute role="rider">
+      <RiderRideHistory />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/history/:id"
+  element={
+    <ProtectedRoute role="rider">
+      <RideDetails />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/payments"
+  element={
+    <ProtectedRoute role="rider">
+      <Payments />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/profile"
+  element={
+    <ProtectedRoute role="rider">
+      <Profile />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/settings"
+  element={
+    <ProtectedRoute role="rider">
+      <Settings />
+    </ProtectedRoute>
+  }
+/>
 
             {/* Driver */}
             <Route
