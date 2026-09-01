@@ -1,159 +1,26 @@
 import { useState } from "react";
+import { ArrowRight, Car, Clock3, MapPin, Navigation, Search, Star, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import RiderLayout from "../../layouts/RiderLayout";
+import { recentRides, rideTypes, savedPlaces } from "../../data/riderMockData";
 
-// ---- MOCK DATA ----
-// Placeholder only. Once the Ride model + /api/rides endpoints exist, replace
-// these with real state fetched from the backend. Kept local/unwired on
-// purpose for this pass — see chat for scope.
-const RIDE_TYPES = [
-  { id: "auto", label: "Auto", eta: "3 min", fare: "₹85" },
-  { id: "mini", label: "Mini", eta: "5 min", fare: "₹142" },
-  { id: "sedan", label: "Sedan", eta: "6 min", fare: "₹198" },
-];
-
-const MOCK_RECENT_RIDES = [
-  { id: 1, date: "Aug 27", route: "Hazratganj → Gomti Nagar", fare: "₹156", status: "Completed" },
-  { id: 2, date: "Aug 24", route: "Alambagh → Charbagh", fare: "₹98", status: "Completed" },
-];
-// ---- END MOCK DATA ----
-
-function RiderDashboard() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const [pickup, setPickup] = useState("Current location");
-  const [destination, setDestination] = useState("");
-  const [selectedType, setSelectedType] = useState(null);
-  const [activeRide, setActiveRide] = useState(null); // mock "in progress" ride, null = none
-  const [profileOpen, setProfileOpen] = useState(false);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  const handleRequestRide = () => {
-    if (!destination || !selectedType) return;
-    // MOCK ONLY — no backend call yet. Real version will POST /api/rides.
-    setActiveRide({
-      pickup,
-      destination,
-      type: RIDE_TYPES.find((t) => t.id === selectedType),
-      status: "Driver arriving",
-    });
-    setDestination("");
-    setSelectedType(null);
-  };
-
-  return (
-    <div className="min-h-screen bg-[#F7F7F5] dark:bg-[#0B0B0B]">
-      {/* Top bar: brand + profile avatar (not full profile — matches industry pattern) */}
-      <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4 dark:border-[#2A2A2A]">
-        <span className="text-xl font-black text-[#0B0B0B] dark:text-white">CabX</span>
-
-        <div className="relative">
-          <button
-            onClick={() => setProfileOpen((o) => !o)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B0B0B] font-bold text-white dark:bg-[#F5C518] dark:text-black"
-          >
-            {user?.name?.[0]?.toUpperCase() || "R"}
-          </button>
-
-          {profileOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-[#2A2A2A] dark:bg-[#171717]">
-              <p className="font-semibold text-[#0B0B0B] dark:text-white">{user?.name}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{user?.phone}</p>
-              <Button onClick={handleLogout} className="mt-3 w-auto bg-transparent px-4 py-1.5 text-sm text-[#0B0B0B] ring-1 ring-gray-300 hover:bg-gray-100 dark:text-white dark:ring-[#333333] dark:hover:bg-[#0B0B0B]">
-                Log out
-              </Button>
-            </div>
-          )}
+export default function RiderDashboard() {
+  const { user } = useAuth(); const navigate = useNavigate();
+  const [destination, setDestination] = useState(""); const [selected, setSelected] = useState("mini");
+  return <RiderLayout activePage="Dashboard">
+    <div className="mb-7"><p className="text-sm text-gray-500 dark:text-gray-400">Good evening 👋</p><h1 className="mt-1 text-3xl font-black">Where are you going, {user?.name?.split(" ")[0] || "Rider"}?</h1></div>
+    <div className="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
+      <section className="overflow-hidden rounded-3xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="relative h-[330px] overflow-hidden bg-[#e8e5dc] dark:bg-[#1d1d1d]"><div className="absolute inset-0 opacity-50" style={{backgroundImage:"linear-gradient(25deg, transparent 48%, #b9b5aa 49%, #b9b5aa 51%, transparent 52%),linear-gradient(110deg, transparent 45%, #c8c4b9 46%, #c8c4b9 48%, transparent 49%)",backgroundSize:"130px 100px, 170px 130px"}}/><div className="absolute left-[34%] top-[42%] h-4 w-4 rounded-full border-4 border-[#F5C518] bg-black shadow-lg"/><div className="absolute right-[25%] top-[28%] h-4 w-4 rounded-full bg-black shadow-lg"/><div className="absolute left-[36%] top-[43%] h-1 w-[40%] rotate-[-18deg] bg-[#F5C518]"/><div className="absolute left-5 top-5 rounded-xl bg-white/90 px-3 py-2 text-xs font-semibold shadow dark:bg-[#111]/90">Live service area</div></div>
+        <div className="p-6"><div className="mb-5 flex items-center justify-between"><div><h2 className="text-xl font-bold">Where to?</h2><p className="text-sm text-gray-500 dark:text-gray-400">Choose your pickup and destination</p></div><Navigation size={20}/></div>
+          <div className="space-y-3"><div className="flex items-center gap-3 rounded-xl bg-gray-50 p-3 dark:bg-[#1f1f1f]"><MapPin size={18} className="text-[#C9A000]"/><input className="w-full bg-transparent outline-none" value="Current location" readOnly/></div><div className="flex items-center gap-3 rounded-xl border border-gray-200 p-3 dark:border-[#333]"><Search size={18}/><input className="w-full bg-transparent outline-none" placeholder="Where are you going?" value={destination} onChange={e=>setDestination(e.target.value)}/></div></div>
+          {destination && <div className="mt-4 grid grid-cols-3 gap-2">{rideTypes.map(r=><button key={r.id} onClick={()=>setSelected(r.id)} className={`rounded-xl border p-3 text-left ${selected===r.id?"border-[#F5C518] bg-[#FFF9E5] dark:bg-[#2A2410]":"border-gray-200 dark:border-[#333]"}`}><p className="font-bold">{r.label}</p><p className="text-xs text-gray-500">{r.eta} · ₹{r.fare}</p></button>)}</div>}
+          <button onClick={()=>navigate("/rider/book",{state:{destination,selected}})} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#F5C518] px-5 py-3 font-bold text-black hover:bg-[#E5B600]">Book a ride <ArrowRight size={18}/></button>
         </div>
-      </div>
-
-      <div className="mx-auto max-w-3xl px-6 py-8">
-        {/* Map placeholder — real map/geolocation integration is a separate, bigger task */}
-        <div className="flex h-56 items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white text-gray-400 dark:border-[#333333] dark:bg-[#171717]">
-          Map goes here (Google Maps / Mapbox — future integration)
-        </div>
-
-        {/* "Where to?" — the primary action, front and center like Uber/Ola */}
-        <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <h2 className="mb-4 text-lg font-bold text-[#0B0B0B] dark:text-white">Where to?</h2>
-
-          <Input label="Pickup" value={pickup} onChange={(e) => setPickup(e.target.value)} />
-          <Input
-            label="Destination"
-            placeholder="Enter destination"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          />
-
-          {destination && (
-            <div className="mt-2 space-y-2">
-              {RIDE_TYPES.map((type) => (
-                <button
-                  key={type.id}
-                  onClick={() => setSelectedType(type.id)}
-                  className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
-                    selectedType === type.id
-                      ? "border-[#F5C518] bg-[#FFF9E5] dark:bg-[#2A2410]"
-                      : "border-gray-200 dark:border-[#2A2A2A]"
-                  }`}
-                >
-                  <div>
-                    <p className="font-semibold text-[#0B0B0B] dark:text-white">{type.label}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{type.eta} away</p>
-                  </div>
-                  <span className="font-semibold text-[#0B0B0B] dark:text-white">{type.fare}</span>
-                </button>
-              ))}
-
-              <Button onClick={handleRequestRide} disabled={!selectedType} className="mt-2">
-                Request ride
-              </Button>
-            </div>
-          )}
-        </div>
-
-        {/* Active ride — only shown when a ride is in progress */}
-        {activeRide && (
-          <div className="mt-6 rounded-2xl border border-[#F5C518] bg-[#FFF9E5] p-6 dark:bg-[#2A2410]">
-            <h2 className="mb-2 text-lg font-bold text-[#0B0B0B] dark:text-white">
-              {activeRide.status}
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              {activeRide.pickup} → {activeRide.destination}
-            </p>
-            <p className="mt-1 text-sm font-semibold text-[#0B0B0B] dark:text-white">
-              {activeRide.type.label} · {activeRide.type.fare}
-            </p>
-          </div>
-        )}
-
-        {/* Recent rides */}
-        <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <h2 className="mb-4 text-lg font-bold text-[#0B0B0B] dark:text-white">Recent rides</h2>
-
-          <div className="space-y-3">
-            {MOCK_RECENT_RIDES.map((ride) => (
-              <div key={ride.id} className="flex items-center justify-between border-b border-gray-100 pb-3 last:border-0 last:pb-0 dark:border-[#2A2A2A]">
-                <div>
-                  <p className="font-medium text-[#0B0B0B] dark:text-white">{ride.route}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{ride.date} · {ride.status}</p>
-                </div>
-                <span className="font-semibold text-[#0B0B0B] dark:text-white">{ride.fare}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      </section>
+      <div className="space-y-6"><section className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]"><div className="flex items-center justify-between"><h2 className="font-bold">Saved places</h2><button className="text-sm font-semibold text-[#9B7A00]">Manage</button></div>{savedPlaces.map(p=><div key={p.label} className="mt-4 flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20"><MapPin size={18}/></div><div><p className="font-semibold">{p.label}</p><p className="text-xs text-gray-500 dark:text-gray-400">{p.address}</p></div></div>)}</section><section className="rounded-3xl bg-[#0B0B0B] p-6 text-white"><p className="text-sm text-gray-400">CABX OFFER</p><h2 className="mt-2 text-2xl font-black">20% OFF</h2><p className="mt-1 text-sm text-gray-300">Your next ride. Use code <b className="text-[#F5C518]">CABX20</b></p><button className="mt-4 rounded-xl bg-[#F5C518] px-4 py-2 text-sm font-bold text-black">View offer</button></section></div>
     </div>
-  );
+    <section className="mt-6 rounded-3xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]"><div className="mb-5 flex items-center justify-between"><div><h2 className="text-xl font-bold">Recent rides</h2><p className="text-sm text-gray-500 dark:text-gray-400">Your latest CabX trips</p></div><button onClick={()=>navigate("/rider/history")} className="text-sm font-bold">View all →</button></div><div className="grid gap-3 lg:grid-cols-2">{recentRides.slice(0,2).map(r=><div key={r.id} className="flex items-center justify-between rounded-2xl bg-gray-50 p-4 dark:bg-[#1e1e1e]"><div><p className="font-semibold">{r.route}</p><p className="mt-1 text-xs text-gray-500">{r.date} · {r.status}</p></div><div className="text-right"><p className="font-bold">₹{r.fare}</p><p className="text-xs text-gray-500">{r.payment}</p></div></div>)}</div></section>
+  </RiderLayout>;
 }
-
-export default RiderDashboard;
