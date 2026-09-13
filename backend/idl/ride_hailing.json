@@ -1,0 +1,250 @@
+{
+  "address": "H7zV5vcQmbnoLib3oUbVSHyhMjKU2BRLSpP9zbFTH4oG",
+  "metadata": {
+    "name": "ride_hailing",
+    "version": "0.1.0",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    {
+      "name": "initialize",
+      "discriminator": [175, 175, 109, 31, 13, 152, 155, 237],
+      "accounts": [
+        { "name": "admin", "writable": true, "pda": { "seeds": [{ "kind": "const", "value": [97, 100, 109, 105, 110, 95, 115, 116, 97, 116, 101] }] } },
+        { "name": "adminAuthority", "writable": true, "signer": true },
+        { "name": "systemProgram", "address": "11111111111111111111111111111111" }
+      ],
+      "args": []
+    },
+    {
+      "name": "register_driver",
+      "discriminator": [111, 15, 228, 191, 92, 150, 88, 27],
+      "accounts": [
+        { "name": "driver", "writable": true },
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "driverTokenAccount", "writable": true },
+        { "name": "mint" },
+        { "name": "vaultAuthority" },
+        { "name": "vault", "writable": true },
+        { "name": "tokenProgram" },
+        { "name": "systemProgram", "address": "11111111111111111111111111111111" }
+      ],
+      "args": [
+        { "name": "stake_amount", "type": "u64" },
+        { "name": "vehicle_hash", "type": { "array": ["u8", 32] } }
+      ]
+    },
+    {
+      "name": "verify_driver",
+      "discriminator": [136, 5, 21, 160, 13, 56, 195, 112],
+      "accounts": [
+        { "name": "driver", "writable": true },
+        { "name": "authority", "signer": true },
+        { "name": "admin" }
+      ],
+      "args": []
+    },
+    {
+      "name": "slash_driver",
+      "discriminator": [248, 241, 241, 28, 127, 125, 15, 182],
+      "accounts": [
+        { "name": "driver", "writable": true },
+        { "name": "authority", "signer": true },
+        { "name": "admin" },
+        { "name": "vaultAuthority" },
+        { "name": "vault", "writable": true },
+        { "name": "treasuryTokenAccount", "writable": true },
+        { "name": "tokenProgram" }
+      ],
+      "args": [
+        { "name": "slash_amount", "type": "u64" }
+      ]
+    },
+    {
+      "name": "request_ride",
+      "discriminator": [132, 255, 110, 219, 127, 95, 101, 135],
+      "accounts": [
+        { "name": "ride", "writable": true },
+        { "name": "rider", "writable": true, "signer": true },
+        { "name": "riderTokenAccount", "writable": true },
+        { "name": "vaultB", "writable": true },
+        { "name": "tokenProgram" },
+        { "name": "systemProgram", "address": "11111111111111111111111111111111" }
+      ],
+      "args": [
+        { "name": "ride_id", "type": "u64" },
+        { "name": "source", "type": { "array": ["u8", 32] } },
+        { "name": "destination", "type": { "array": ["u8", 32] } },
+        { "name": "amount", "type": "u64" }
+      ]
+    },
+    {
+      "name": "accept_ride",
+      "discriminator": [208, 246, 118, 77, 20, 106, 157, 232],
+      "accounts": [
+        { "name": "ride", "writable": true },
+        { "name": "driver", "writable": true },
+        { "name": "authority", "writable": true, "signer": true }
+      ],
+      "args": [
+        { "name": "ride_id", "type": "u64" }
+      ]
+    },
+    {
+      "name": "start_ride",
+      "discriminator": [198, 221, 145, 132, 226, 85, 136, 97],
+      "accounts": [
+        { "name": "rideAccount", "writable": true },
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "driver" }
+      ],
+      "args": [
+        { "name": "ride_id", "type": "u64" }
+      ]
+    },
+    {
+      "name": "cancel_ride",
+      "discriminator": [150, 77, 203, 32, 143, 141, 243, 192],
+      "accounts": [
+        { "name": "ride", "writable": true },
+        { "name": "rider", "writable": true, "signer": true },
+        { "name": "vaultB", "writable": true },
+        { "name": "riderTokenAccount", "writable": true },
+        { "name": "tokenProgram" }
+      ],
+      "args": [
+        { "name": "ride_id", "type": "u64" }
+      ]
+    },
+    {
+      "name": "complete_ride",
+      "discriminator": [196, 120, 0, 113, 17, 178, 79, 225],
+      "accounts": [
+        { "name": "ride", "writable": true },
+        { "name": "driver", "writable": true, "signer": true },
+        { "name": "vaultB", "writable": true },
+        { "name": "driverTokenAccount", "writable": true },
+        { "name": "tokenProgram" }
+      ],
+      "args": [
+        { "name": "ride_id", "type": "u64" }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AdminState",
+      "discriminator": [190, 42, 124, 96, 242, 52, 141, 28]
+    },
+    {
+      "name": "Driver",
+      "discriminator": [4, 85, 37, 116, 50, 52, 176, 177]
+    },
+    {
+      "name": "Ride",
+      "discriminator": [227, 31, 10, 115, 113, 207, 13, 112]
+    },
+    {
+      "name": "Rider",
+      "discriminator": [168, 229, 206, 205, 105, 183, 212, 65]
+    },
+    {
+      "name": "DriverLocation",
+      "discriminator": [149, 230, 251, 190, 131, 31, 28, 81]
+    }
+  ],
+  "errors": [
+    { "code": 6000, "name": "StakeTooLow", "msg": "Stake amount is too low" },
+    { "code": 6001, "name": "SlashAmountExceedsStake", "msg": "Slash amount exceeds available stake" },
+    { "code": 6002, "name": "Underflow", "msg": "Arithmetic underflow" },
+    { "code": 6003, "name": "InvalidAmount", "msg": "Invalid amount" },
+    { "code": 6004, "name": "RideNotAvailable", "msg": "Ride is not available for acceptance" },
+    { "code": 6005, "name": "DriverNotVerified", "msg": "Driver is not verified" },
+    { "code": 6006, "name": "Unauthorized", "msg": "Unauthorized action" },
+    { "code": 6007, "name": "AlreadyVerified", "msg": "Driver is already verified" },
+    { "code": 6008, "name": "InvalidGatewayToken", "msg": "Invalid gateway token" }
+  ],
+  "types": [
+    {
+      "name": "AdminState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "authority", "type": "pubkey" },
+          { "name": "bump", "type": "u8" }
+        ]
+      }
+    },
+    {
+      "name": "Driver",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "authority", "type": "pubkey" },
+          { "name": "vehicle_hash", "type": { "array": ["u8", 32] } },
+          { "name": "stake_amount", "type": "u64" },
+          { "name": "ratings", "type": "u8" },
+          { "name": "total_ratings", "type": "u64" },
+          { "name": "total_rides", "type": "u64" },
+          { "name": "is_verified", "type": "bool" },
+          { "name": "civic_id_hash", "type": { "array": ["u8", 32] } },
+          { "name": "civic_id_verified", "type": "bool" },
+          { "name": "bump", "type": "u8" },
+          { "name": "verified_at", "type": "i64" }
+        ]
+      }
+    },
+    {
+      "name": "Ride",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "rider", "type": "pubkey" },
+          { "name": "driver", "type": "pubkey" },
+          { "name": "amount", "type": "u64" },
+          { "name": "status", "type": { "defined": { "name": "RideStatus" } } },
+          { "name": "source_hash", "type": { "array": ["u8", 32] } },
+          { "name": "destination_hash", "type": { "array": ["u8", 32] } },
+          { "name": "timestamp", "type": "i64" },
+          { "name": "bump", "type": "u8" }
+        ]
+      }
+    },
+    {
+      "name": "Rider",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "authority", "type": "pubkey" },
+          { "name": "name", "type": "string" },
+          { "name": "rating", "type": "u8" }
+        ]
+      }
+    },
+    {
+      "name": "DriverLocation",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "driver", "type": "pubkey" },
+          { "name": "lat", "type": "f64" },
+          { "name": "lng", "type": "f64" },
+          { "name": "timestamp", "type": "i64" }
+        ]
+      }
+    },
+    {
+      "name": "RideStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          { "name": "Requested" },
+          { "name": "Accepted" },
+          { "name": "InProgress" },
+          { "name": "Completed" },
+          { "name": "Canceled" }
+        ]
+      }
+    }
+  ]
+}
