@@ -9,6 +9,7 @@ import driverRoutes from "./routes/driverRoutes.js";
 import rideRoutes from "./routes/rideRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import miscRoutes from "./routes/miscRoutes.js";
+import oracleRoutes from "./routes/oracleRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use("/api/rider", riderRoutes);
 app.use("/api/drivers", driverRoutes);
 app.use("/api/rides", rideRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/oracle", oracleRoutes);
 app.use("/api", miscRoutes);
 
 app.use(errorHandler);
