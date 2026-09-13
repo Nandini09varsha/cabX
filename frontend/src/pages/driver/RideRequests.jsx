@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Car,
   Clock3,
@@ -13,63 +13,143 @@ import {
 
 import DriverLayout from "../../components/driver/DriverLayout";
 
+const API_URL = "http://localhost:5000/api";
+
 function RideRequests() {
-  const [requests, setRequests] = useState([
-    {
-      id: 1,
-      rider: "Rahul Sharma",
-      rating: 4.8,
-      pickup: "Vaishali Metro Station",
-      destination: "Noida Sector 62",
-      distance: "6.4 km",
-      duration: "24 min",
-      fare: 240,
-      requestedAt: "Just now",
-    },
-    {
-      id: 2,
-      rider: "Priya Singh",
-      rating: 4.9,
-      pickup: "Shipra Mall",
-      destination: "Indirapuram Habitat Centre",
-      distance: "4.1 km",
-      duration: "17 min",
-      fare: 175,
-      requestedAt: "2 min ago",
-    },
-    {
-      id: 3,
-      rider: "Aman Verma",
-      rating: 4.7,
-      pickup: "Kaushambi Metro",
-      destination: "Anand Vihar",
-      distance: "5.8 km",
-      duration: "21 min",
-      fare: 210,
-      requestedAt: "4 min ago",
-    },
-  ]);
-
+  const [requests, setRequests] = useState([]);
   const [rideAction, setRideAction] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const handleAccept = (request) => {
-    setRideAction({
-      type: "accepted",
-      ride: request,
-    });
+  // Fetch ride requests from backend
+  const fetchRequests = async () => {
+    try {
+      const token = localStorage.getItem("cabx-token");
 
-    localStorage.setItem("cabx-current-ride", JSON.stringify(request));
+      if (!token) {
+        throw new Error("Authentication token not found");
+      }
 
-    setRequests((prev) => prev.filter((ride) => ride.id !== request.id));
+      const response = await fetch(`${API_URL}/driver/requests`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch ride requests");
+      }
+
+      const formattedRequests = data.rides.map((ride) => ({
+        id: ride._id,
+        rider: ride.rider?.name || "Unknown Rider",
+        phone: ride.rider?.phone || "",
+        rating: 4.8,
+        pickup: ride.pickup.address,
+        destination: ride.destination.address,
+        distance: "N/A",
+        duration: "N/A",
+        fare: ride.fare,
+        requestedAt: "Just now",
+        rideData: ride,
+      }));
+
+      setRequests(formattedRequests);
+    } catch (error) {
+      console.error("Fetch ride requests error:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleReject = (request) => {
-    setRideAction({
-      type: "rejected",
-      ride: request,
-    });
+  // Fetch requests when page loads
+  useEffect(() => {
+    const loadRequests = async () => {
+      await fetchRequests();
+    };
 
-    setRequests((prev) => prev.filter((ride) => ride.id !== request.id));
+    loadRequests();
+  }, []);
+
+  // Accept ride
+  const handleAccept = async (request) => {
+    try {
+      const token = localStorage.getItem("cabx-token");
+
+      if (!token) {
+        throw new Error("Authentication token not found");
+      }
+
+      const response = await fetch(
+        `${API_URL}/driver/rides/${request.id}/accept`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to accept ride");
+      }
+
+      setRideAction({
+        type: "accepted",
+        ride: request,
+      });
+
+      // Store actual backend ride
+      localStorage.setItem("cabx-current-ride", JSON.stringify(data.ride));
+
+      // Remove accepted ride from available requests
+      setRequests((prev) => prev.filter((ride) => ride.id !== request.id));
+    } catch (error) {
+      console.error("Accept ride error:", error);
+      alert(error.message);
+    }
+  };
+
+  // Reject ride
+  const handleReject = async (request) => {
+    try {
+      const token = localStorage.getItem("cabx-token");
+
+      if (!token) {
+        throw new Error("Authentication token not found");
+      }
+
+      const response = await fetch(
+        `${API_URL}/driver/rides/${request.id}/reject`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to reject ride");
+      }
+
+      setRideAction({
+        type: "rejected",
+        ride: request,
+      });
+
+      // Remove rejected ride from UI
+      setRequests((prev) => prev.filter((ride) => ride.id !== request.id));
+    } catch (error) {
+      console.error("Reject ride error:", error);
+      alert(error.message);
+    }
   };
 
   return (
@@ -98,7 +178,6 @@ function RideRequests() {
         </button>
       </div>
 
-      {/* Accepted Ride */}
       {/* Ride Action Status */}
       {rideAction && (
         <div
@@ -168,8 +247,19 @@ function RideRequests() {
         </p>
       </div>
 
-      {/* Requests */}
-      {requests.length > 0 ? (
+      {/* Loading State */}
+      {loading ? (
+        <div className="flex min-h-[400px] items-center justify-center rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#F5C518]" />
+
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Loading ride requests...
+            </p>
+          </div>
+        </div>
+      ) : requests.length > 0 ? (
+        /* Requests */
         <div className="space-y-4">
           {requests.map((request) => (
             <div
@@ -223,6 +313,7 @@ function RideRequests() {
                     </div>
 
                     <div className="flex-1 space-y-5">
+                      {/* Pickup */}
                       <div>
                         <div className="flex items-center gap-2">
                           <MapPin
@@ -240,6 +331,7 @@ function RideRequests() {
                         </p>
                       </div>
 
+                      {/* Destination */}
                       <div>
                         <div className="flex items-center gap-2">
                           <Navigation size={14} />
@@ -284,7 +376,7 @@ function RideRequests() {
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E] col-span-2 sm:col-span-1">
+                    <div className="col-span-2 rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E] sm:col-span-1">
                       <Wallet
                         size={16}
                         className="mx-auto mb-1 text-gray-500"
@@ -334,7 +426,10 @@ function RideRequests() {
           </p>
 
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              setLoading(true);
+              fetchRequests();
+            }}
             className="mt-5 rounded-xl bg-[#F5C518] px-5 py-3 text-sm font-bold text-black transition hover:bg-[#E5B600]"
           >
             Refresh Requests

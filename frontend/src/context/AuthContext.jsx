@@ -5,26 +5,34 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // true while we check for an existing session
 
-  // On first load, if a token is already saved, fetch the current user
-  // so a page refresh doesn't log the rider out.
+  // If a token exists, we need to verify the session.
+  // Otherwise, there is nothing to load.
+  const [loading, setLoading] = useState(() =>
+    Boolean(localStorage.getItem("cabx-token")),
+  );
+
   useEffect(() => {
     const token = localStorage.getItem("cabx-token");
 
+    // No existing session
     if (!token) {
-      setLoading(false);
       return;
     }
 
-    api
-      .get("/auth/me")
-      .then((res) => setUser(res.data.user))
-      .catch(() => {
+    const restoreSession = async () => {
+      try {
+        const res = await api.get("/auth/me");
+        setUser(res.data.user);
+      } catch (error) {
         localStorage.removeItem("cabx-token");
         setUser(null);
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    restoreSession();
   }, []);
 
   const register = async ({ name, email, phone, password, role }) => {
@@ -43,9 +51,14 @@ export function AuthProvider({ children }) {
   };
 
   const login = async ({ email, password }) => {
-    const res = await api.post("/auth/login", { email, password });
+    const res = await api.post("/auth/login", {
+      email,
+      password,
+    });
+
     localStorage.setItem("cabx-token", res.data.token);
     setUser(res.data.user);
+
     return res.data.user;
   };
 
@@ -56,7 +69,14 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, loading, register, login, logout }}
+      value={{
+        user,
+        setUser,
+        loading,
+        register,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

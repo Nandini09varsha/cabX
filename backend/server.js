@@ -11,9 +11,45 @@ dotenv.config();
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.on("finish", () => {
+    console.log("---- RESPONSE ----");
+    console.log("METHOD:", req.method);
+    console.log("URL:", req.url);
+    console.log("STATUS:", res.statusCode);
+    console.log("ALLOW-ORIGIN:", res.getHeader("Access-Control-Allow-Origin"));
+    console.log(
+      "ALLOW-METHODS:",
+      res.getHeader("Access-Control-Allow-Methods"),
+    );
+    console.log(
+      "ALLOW-HEADERS:",
+      res.getHeader("Access-Control-Allow-Headers"),
+    );
+    console.log("------------------");
+  });
+
+  next();
+});
 connectDB();
 
-app.use(cors());
+console.log("CORS CONFIG LOADED");
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
+app.options(
+  /.*/,
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
