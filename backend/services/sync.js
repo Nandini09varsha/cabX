@@ -42,10 +42,11 @@ export async function syncDriverFromChain(profile) {
 }
 
 export async function recordPayment({ ride, rider, driver, amount, mint, signature, kind }) {
+  const filter = ride?._id ? { ride: ride._id, kind } : { signature, kind };
   return Payment.findOneAndUpdate(
-    { ride: ride._id, kind },
+    filter,
     {
-      ride: ride._id,
+      ride: ride?._id,
       rider,
       driver,
       amount,

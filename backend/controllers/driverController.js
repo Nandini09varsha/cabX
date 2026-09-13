@@ -9,7 +9,7 @@ import {
   fetchDriverAccount,
   serializeDriverAccount,
 } from "../services/driverProgram.js";
-import { syncDriverFromChain } from "../services/sync.js";
+import { recordPayment, syncDriverFromChain } from "../services/sync.js";
 import { adminKeypair, hasAdminSigner } from "../config/solana.js";
 
 async function getOrCreateProfile(user) {
@@ -102,6 +102,14 @@ export const confirmDriverRegister = asyncHandler(async (req, res) => {
   profile.registerTx = signature;
   await profile.save();
   await syncDriverFromChain(profile);
+  await recordPayment({
+    rider: req.user._id,
+    driver: req.user._id,
+    amount: profile.stakeAmount,
+    mint: profile.mint || "",
+    signature,
+    kind: "stake",
+  });
 
   return res.status(200).json({
     message: "Driver registration confirmed",
