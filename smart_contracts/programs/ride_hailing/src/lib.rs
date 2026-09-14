@@ -1,0 +1,106 @@
+#![allow(unexpected_cfgs)]
+
+use anchor_lang::prelude::*;
+
+pub mod errors;
+pub mod instructions;
+pub mod state;
+
+pub use errors::*;
+pub use instructions::*;
+pub use state::{AdminState, Driver, DriverLocation, Ride, RideStatus, Rider};
+
+declare_id!("H7zV5vcQmbnoLib3oUbVSHyhMjKU2BRLSpP9zbFTH4oG");
+
+#[program]
+pub mod ride_hailing {
+    use super::*;
+
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+        // Initialize admin state with the authority provided
+        let admin = &mut ctx.accounts.admin;
+        admin.authority = ctx.accounts.admin_authority.key();
+        admin.bump = ctx.bumps.admin;
+        msg!("Initialized admin: {:?}", admin.authority);
+        Ok(())
+    }
+
+    pub fn register_driver(
+        ctx: Context<RegisterDriver>,
+        stake_amount: u64,
+        vehicle_hash: [u8; 32],
+    ) -> Result<()> {
+        let bump = ctx.bumps.driver;
+        ctx.accounts.initialize(stake_amount, vehicle_hash, bump)
+    }
+
+    pub fn verify_driver(ctx: Context<VerifyDriver>) -> Result<()> {
+        ctx.accounts.verify()
+    }
+
+    pub fn slash_driver(ctx: Context<SlashDriver>, slash_amount: u64) -> Result<()> {
+        let vault_authority_bump = ctx.bumps.vault_authority;
+        ctx.accounts.slash(slash_amount, vault_authority_bump)
+    }
+
+    pub fn request_ride(
+        ctx: Context<RequestRide>,
+        _ride_id: u64,
+        source: [u8; 32],
+        destination: [u8; 32],
+        amount: u64,
+    ) -> Result<()> {
+        let bump = ctx.bumps.ride;
+        ctx.accounts.request(source, destination, amount, bump)
+    }
+
+    pub fn accept_ride(
+        ctx: Context<AcceptRide>,
+        _ride_id: u64,
+    ) -> Result<()> {
+        ctx.accounts.accept()
+    }
+
+    pub fn start_ride(
+        ctx: Context<StartRide>,
+        _ride_id: u64,
+    ) -> Result<()> {
+        ctx.accounts.start()
+    }
+
+    pub fn cancel_ride(
+        ctx: Context<CancelRide>,
+        _ride_id: u64,
+    ) -> Result<()> {
+        ctx.accounts.cancel(_ride_id)
+    }
+
+    pub fn complete_ride(
+        ctx: Context<CompleteRide>,
+        _ride_id: u64,
+    ) -> Result<()> {
+        ctx.accounts.complete(_ride_id)
+    }
+
+    // pub fn report_gps(
+    //     ctx: Context<ReportGPS>,
+    //     latitude: f64,
+    //     longitude: f64,
+    // ) -> Result<()> {
+    //     ctx.accounts.report(latitude, longitude)
+    // }
+}
+#[derive(Accounts)]
+pub struct Initialize<'info> {
+    #[account(
+        init,
+        payer = admin_authority,
+        space = AdminState::LEN,
+        seeds = [b"admin_state"],
+        bump
+    )]
+    pub admin: Account<'info, AdminState>,
+    #[account(mut)]
+    pub admin_authority: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
