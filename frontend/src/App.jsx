@@ -26,6 +26,7 @@ import Earnings from "./pages/driver/Earnings";
 import DriverProfile from "./pages/driver/DriverProfile";
 import DriverSettings from "./pages/driver/DriverSettings";
 import RegisterDriver from "./pages/driver/RegisterDriver";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   return (
@@ -190,6 +191,24 @@ function App() {
               element={
                 <ProtectedRoute role="driver">
                   <DriverSettings />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/admin/drivers"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminDashboard />
                 </ProtectedRoute>
               }
             />

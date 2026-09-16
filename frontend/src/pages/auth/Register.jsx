@@ -43,6 +43,8 @@ function Register() {
 
       if (form.role === "driver") {
         navigate("/driver");
+      } else if (form.role === "admin") {
+        navigate("/admin");
       } else {
         navigate("/rider");
       }
@@ -73,7 +75,7 @@ function Register() {
               Register as
             </label>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => handleRoleChange("rider")}
@@ -83,7 +85,7 @@ function Register() {
                     : "border-gray-300 bg-transparent text-gray-600 dark:border-[#333] dark:text-gray-300"
                 }`}
               >
-                🚕 Rider
+                Rider
               </button>
 
               <button
@@ -95,7 +97,19 @@ function Register() {
                     : "border-gray-300 bg-transparent text-gray-600 dark:border-[#333] dark:text-gray-300"
                 }`}
               >
-                🚗 Driver
+                Driver
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRoleChange("admin")}
+                className={`rounded-xl border px-4 py-3 text-sm font-semibold transition ${
+                  form.role === "admin"
+                    ? "border-[#F5C518] bg-[#F5C518] text-black"
+                    : "border-gray-300 bg-transparent text-gray-600 dark:border-[#333] dark:text-gray-300"
+                }`}
+              >
+                Admin
               </button>
             </div>
           </div>
