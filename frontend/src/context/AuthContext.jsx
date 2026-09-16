@@ -1,14 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import api from "../api/axios";
+import { authApi } from "../api/cabx";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // true while we check for an existing session
+  const [loading, setLoading] = useState(true);
 
-  // On first load, if a token is already saved, fetch the current user
-  // so a page refresh doesn't log the rider out.
+  const refreshUser = async () => {
+    const res = await authApi.me();
+    setUser(res.data.user);
+    return res.data.user;
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("cabx-token");
 
@@ -17,9 +21,7 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    api
-      .get("/auth/me")
-      .then((res) => setUser(res.data.user))
+    refreshUser()
       .catch(() => {
         localStorage.removeItem("cabx-token");
         setUser(null);
@@ -28,7 +30,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const register = async ({ name, email, phone, password, role }) => {
-    const res = await api.post("/auth/register", {
+    const res = await authApi.register({
       name,
       email,
       phone,
@@ -38,13 +40,18 @@ export function AuthProvider({ children }) {
 
     localStorage.setItem("cabx-token", res.data.token);
     setUser(res.data.user);
-
     return res.data.user;
   };
 
   const login = async ({ email, password }) => {
-    const res = await api.post("/auth/login", { email, password });
+    const res = await authApi.login({ email, password });
     localStorage.setItem("cabx-token", res.data.token);
+    setUser(res.data.user);
+    return res.data.user;
+  };
+
+  const linkWallet = async (walletAddress, tokenAccount) => {
+    const res = await authApi.linkWallet({ walletAddress, tokenAccount });
     setUser(res.data.user);
     return res.data.user;
   };
@@ -56,7 +63,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, loading, register, login, logout }}
+      value={{
+        user,
+        setUser,
+        loading,
+        register,
+        login,
+        logout,
+        refreshUser,
+        linkWallet,
+      }}
     >
       {children}
     </AuthContext.Provider>

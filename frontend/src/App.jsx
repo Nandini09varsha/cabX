@@ -18,6 +18,7 @@ import CurrentRide from "./pages/driver/CurrentRide";
 
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
+import { WalletProvider } from "./context/WalletContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RideHistory from "./pages/driver/RideHistory";
 import Earnings from "./pages/driver/Earnings";
@@ -28,6 +29,7 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
+        <WalletProvider>
         <BrowserRouter>
           <Routes>
             {/* Public routes */}
@@ -173,6 +175,7 @@ function App() {
             />
           </Routes>
         </BrowserRouter>
+        </WalletProvider>
       </AuthProvider>
     </ThemeProvider>
   );
