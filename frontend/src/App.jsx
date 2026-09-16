@@ -25,6 +25,7 @@ import RideHistory from "./pages/driver/RideHistory";
 import Earnings from "./pages/driver/Earnings";
 import DriverProfile from "./pages/driver/DriverProfile";
 import DriverSettings from "./pages/driver/DriverSettings";
+import RegisterDriver from "./pages/driver/RegisterDriver";
 
 function App() {
   return (
@@ -162,6 +163,15 @@ function App() {
               element={
                 <ProtectedRoute role="driver">
                   <Earnings />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/driver/register"
+              element={
+                <ProtectedRoute role="driver">
+                  <RegisterDriver />
                 </ProtectedRoute>
               }
             />

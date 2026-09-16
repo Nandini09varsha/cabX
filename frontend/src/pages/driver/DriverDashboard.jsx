@@ -1,269 +1,121 @@
-import {
-  Car,
-  Map,
-  Wallet,
-  Star,
-  TrendingUp,
-  Navigation,
-  Clock3, 
-  Check,
-  XCircle,
-} from "lucide-react";
-
-import LiveMap from "../../components/LiveMap";
+import { useEffect, useState } from "react";
+import { Car, Check, Star, TrendingUp, Wallet, Navigation } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import DriverLayout from "../../components/driver/DriverLayout";
+import WalletBar from "../../components/WalletBar";
 import { useAuth } from "../../context/AuthContext";
+import { driverApi, rideApi } from "../../api/cabx";
+import { useChainAction } from "../../hooks/useChainAction";
+import { formatFare, initials, apiError } from "../../lib/format";
 
 function DriverDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { run, busy, error, setError } = useChainAction();
+  const [earnings, setEarnings] = useState({ total: 0, completedRides: 0 });
+  const [openRide, setOpenRide] = useState(null);
+  const [profile, setProfile] = useState(null);
 
-  // Temporary mock data.
-  // We will replace this with real API data later.
-  const stats = {
-    earnings: 1240,
-    rides: 8,
-    rating: 4.8,
-    acceptance: 92,
+  const load = async () => {
+    const [earn, open, me] = await Promise.allSettled([
+      driverApi.earnings(),
+      rideApi.open(),
+      driverApi.me(),
+    ]);
+    if (earn.status === "fulfilled") setEarnings(earn.value.data);
+    if (open.status === "fulfilled") setOpenRide(open.value.data.rides?.[0] || null);
+    if (me.status === "fulfilled") setProfile(me.value.data.driver);
   };
 
-  const rideRequest = {
-    pickup: "Indirapuram Habitat Centre",
-    destination: "Shipra Mall, Ghaziabad",
-    distance: "4.2 km",
-    estimatedTime: "18 min",
-    fare: 185,
+  useEffect(() => {
+    load().catch((err) => setError(apiError(err)));
+  }, [setError]);
+
+  const accept = async () => {
+    if (!openRide) return;
+    try {
+      await run(
+        async () => (await rideApi.accept(openRide._id)).data,
+        async (signature) => (await rideApi.confirmAccept(openRide._id, signature)).data,
+      );
+      navigate("/driver/current-ride");
+    } catch {
+      /* hook */
+    }
   };
 
   return (
     <DriverLayout activePage="Dashboard">
-      {/* Welcome */}
       <div className="mb-6">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          Welcome back 👋
-        </p>
-
+        <p className="text-sm text-gray-500 dark:text-gray-400">Welcome back</p>
         <h1 className="mt-1 text-2xl font-black sm:text-3xl">
           Ready to drive, {user?.name?.split(" ")[0] || "Driver"}?
         </h1>
       </div>
-
-      {/* Stats */}
+      <WalletBar />
+      {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
-        {/* Earnings */}
         <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
           <div className="mb-4 flex items-center justify-between">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
-              <Wallet
-                size={20}
-                className="text-[#C9A000] dark:text-[#F5C518]"
-              />
-            </div>
-
+            <Wallet size={20} className="text-[#C9A000]" />
             <TrendingUp size={18} className="text-green-500" />
           </div>
-
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Today's Earnings
-          </p>
-
-          <p className="mt-1 text-2xl font-black">₹{stats.earnings}</p>
+          <p className="text-sm text-gray-500">Escrow earnings</p>
+          <p className="mt-1 text-2xl font-black">{formatFare(earnings.total)}</p>
         </div>
-
-        {/* Rides */}
         <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/30">
-            <Car size={20} />
-          </div>
-
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Today's Rides
-          </p>
-
-          <p className="mt-1 text-2xl font-black">{stats.rides}</p>
+          <Car size={20} />
+          <p className="mt-4 text-sm text-gray-500">Completed rides</p>
+          <p className="mt-1 text-2xl font-black">{earnings.completedRides || 0}</p>
         </div>
-
-        {/* Rating */}
         <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-50 dark:bg-yellow-950/30">
-            <Star size={20} />
-          </div>
-
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Driver Rating
-          </p>
-
-          <p className="mt-1 text-2xl font-black">{stats.rating} ⭐</p>
+          <Star size={20} />
+          <p className="mt-4 text-sm text-gray-500">Driver rating</p>
+          <p className="mt-1 text-2xl font-black">{Number(user?.rating || 0).toFixed(1)}</p>
         </div>
-
-        {/* Acceptance */}
         <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 dark:bg-green-950/30">
-            <Check size={20} />
-          </div>
-
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Acceptance Rate
-          </p>
-
-          <p className="mt-1 text-2xl font-black">{stats.acceptance}%</p>
+          <Check size={20} />
+          <p className="mt-4 text-sm text-gray-500">Verified</p>
+          <p className="mt-1 text-2xl font-black">{profile?.isVerified ? "Yes" : "No"}</p>
         </div>
       </div>
 
-      {/* Main Grid */}
-      <div className="grid gap-6 xl:grid-cols-[1.6fr_1fr]">
-        {/* Map */}
-        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-[#2A2A2A]">
-            <div>
-              <h2 className="font-bold">Your Location</h2>
-
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Live driver location
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs font-medium">
-              <span className="h-2 w-2 rounded-full bg-green-500" />
-              GPS Active
-            </div>
-          </div>
-
-          <div className="h-[380px]">
-            <LiveMap />
-          </div>
-        </div>
-
-        {/* Ride Request */}
-        <div className="rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-[#2A2A2A]">
-            <div>
-              <h2 className="font-bold">New Ride Request</h2>
-
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Just now
-              </p>
-            </div>
-
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5C518]">
-              <Navigation size={17} className="text-black" />
-            </div>
-          </div>
-
-          <div className="p-5">
-            {/* Rider */}
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-200 font-bold dark:bg-[#2A2A2A]">
-                A
+      <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <h2 className="font-bold">Latest open request</h2>
+        {openRide ? (
+          <div className="mt-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F5C518] font-bold">
+                {initials(openRide.rider?.name)}
               </div>
-
               <div>
-                <p className="font-semibold">Ananya Sharma</p>
-
-                <div className="mt-1 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                  <Star size={12} className="fill-current" />
-                  4.9 Rider
-                </div>
-              </div>
-            </div>
-
-            {/* Route */}
-            <div className="mb-5 rounded-xl bg-gray-50 p-4 dark:bg-[#1E1E1E]">
-              <div className="flex gap-3">
-                <div className="flex flex-col items-center pt-1">
-                  <div className="h-3 w-3 rounded-full border-[3px] border-[#F5C518]" />
-
-                  <div className="my-1 h-10 border-l border-dashed border-gray-300 dark:border-gray-600" />
-
-                  <div className="h-3 w-3 rounded-sm bg-black dark:bg-white" />
-                </div>
-
-                <div className="flex-1 space-y-5">
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
-                      Pickup
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold">
-                      {rideRequest.pickup}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">
-                      Destination
-                    </p>
-
-                    <p className="mt-1 text-sm font-semibold">
-                      {rideRequest.destination}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Ride Details */}
-            <div className="mb-5 grid grid-cols-3 gap-2">
-              <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E]">
-                <Map size={16} className="mx-auto mb-1" />
-
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Distance
-                </p>
-
-                <p className="mt-1 text-sm font-bold">{rideRequest.distance}</p>
-              </div>
-
-              <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E]">
-                <Clock3 size={16} className="mx-auto mb-1" />
-
-                <p className="text-xs text-gray-500 dark:text-gray-400">ETA</p>
-
-                <p className="mt-1 text-sm font-bold">
-                  {rideRequest.estimatedTime}
+                <p className="font-semibold">{openRide.rider?.name || "Rider"}</p>
+                <p className="text-xs text-gray-500">
+                  {openRide.source} → {openRide.destination}
                 </p>
               </div>
-
-              <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E]">
-                <Wallet size={16} className="mx-auto mb-1" />
-
-                <p className="text-xs text-gray-500 dark:text-gray-400">Fare</p>
-
-                <p className="mt-1 text-sm font-bold">₹{rideRequest.fare}</p>
-              </div>
             </div>
-
-            {/* Actions */}
-            <div className="grid grid-cols-2 gap-3">
-              <button className="flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-4 py-3 text-sm font-bold transition hover:bg-gray-100 dark:border-[#3A3A3A] dark:hover:bg-[#222]">
-                <XCircle size={17} />
-                Reject
+            <p className="mt-4 text-xl font-black">{formatFare(openRide.amount)}</p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button
+                onClick={() => navigate("/driver/requests")}
+                className="rounded-xl border px-4 py-3 text-sm font-bold dark:border-[#333]"
+              >
+                View all
               </button>
-
-              <button className="flex items-center justify-center gap-2 rounded-xl bg-[#F5C518] px-4 py-3 text-sm font-bold text-black transition hover:bg-[#E5B600]">
-                <Check size={17} />
-                Accept Ride
+              <button
+                onClick={accept}
+                disabled={busy}
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#F5C518] px-4 py-3 text-sm font-bold text-black"
+              >
+                <Navigation size={16} />
+                {busy ? "Signing..." : "Accept ride"}
               </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Profile Reminder */}
-      <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="font-bold">Keep your profile updated</h2>
-
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Complete your vehicle and license information to receive more ride
-              requests.
-            </p>
-          </div>
-
-          <button className="rounded-xl bg-black px-5 py-3 text-sm font-bold text-white transition hover:bg-gray-800 dark:bg-[#F5C518] dark:text-black dark:hover:bg-[#E5B600]">
-            Complete Profile
-          </button>
-        </div>
+        ) : (
+          <p className="mt-3 text-sm text-gray-500">No open ride requests right now.</p>
+        )}
       </div>
     </DriverLayout>
   );
