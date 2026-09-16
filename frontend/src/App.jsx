@@ -11,6 +11,7 @@ import RideDetails from "./pages/rider/RideDetails";
 import Payments from "./pages/rider/Payments";
 import Profile from "./pages/rider/Profile";
 import Settings from "./pages/rider/Settings";
+import Drivers from "./pages/rider/Drivers";
 
 import DriverDashboard from "./pages/driver/DriverDashboard";
 import RideRequests from "./pages/driver/RideRequests";
@@ -88,6 +89,15 @@ function App() {
   element={
     <ProtectedRoute role="rider">
       <Payments />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/drivers"
+  element={
+    <ProtectedRoute role="rider">
+      <Drivers />
     </ProtectedRoute>
   }
 />

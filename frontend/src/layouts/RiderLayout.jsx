@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bell, Car, History, LayoutDashboard, LogOut, Menu, Navigation, Settings, UserRound, Wallet, X } from "lucide-react";
+import { Bell, Car, History, LayoutDashboard, LogOut, Menu, Navigation, Settings, ShieldCheck, UserRound, Wallet, X } from "lucide-react";
 import ThemeToggle from "../components/ThemeToggle";
 import { useAuth } from "../context/AuthContext";
 import { notifications } from "../data/riderMockData";
@@ -11,6 +11,7 @@ const items = [
   ["Current Ride", "/rider/current-ride", Navigation],
   ["Ride History", "/rider/history", History],
   ["Payments", "/rider/payments", Wallet],
+  ["Drivers", "/rider/drivers", ShieldCheck],
   ["Profile", "/rider/profile", UserRound],
   ["Settings", "/rider/settings", Settings],
 ];
