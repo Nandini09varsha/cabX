@@ -24,26 +24,28 @@ import {
 
 const router = express.Router();
 
-router.use(protect, requireWallet);
+router.use(protect);
 
 router.get("/open", authorizeRoles("driver", "admin"), listOpenRides);
 router.get("/mine", listMyRides);
 router.get("/active", getCurrentRide);
-router.post("/", authorizeRoles("rider"), requestRide);
 router.get("/:id", getRide);
-router.post("/:id/confirm", authorizeRoles("rider"), confirmRideRequest);
-router.post("/:id/accept", authorizeRoles("driver"), acceptRide);
-router.post("/:id/accept/confirm", authorizeRoles("driver"), confirmAcceptRide);
-router.post("/:id/start", authorizeRoles("driver"), startRide);
-router.post("/:id/start/confirm", authorizeRoles("driver"), confirmStartRide);
-router.post("/:id/cancel", authorizeRoles("rider"), cancelRide);
-router.post("/:id/cancel/confirm", authorizeRoles("rider"), confirmCancelRide);
-router.post("/:id/complete", authorizeRoles("driver"), completeRide);
+router.post("/:id/rate", authorizeRoles("rider", "driver"), rateRide);
+
+router.post("/", authorizeRoles("rider"), requireWallet, requestRide);
+router.post("/:id/confirm", authorizeRoles("rider"), requireWallet, confirmRideRequest);
+router.post("/:id/accept", authorizeRoles("driver"), requireWallet, acceptRide);
+router.post("/:id/accept/confirm", authorizeRoles("driver"), requireWallet, confirmAcceptRide);
+router.post("/:id/start", authorizeRoles("driver"), requireWallet, startRide);
+router.post("/:id/start/confirm", authorizeRoles("driver"), requireWallet, confirmStartRide);
+router.post("/:id/cancel", authorizeRoles("rider"), requireWallet, cancelRide);
+router.post("/:id/cancel/confirm", authorizeRoles("rider"), requireWallet, confirmCancelRide);
+router.post("/:id/complete", authorizeRoles("driver"), requireWallet, completeRide);
 router.post(
   "/:id/complete/confirm",
   authorizeRoles("driver"),
+  requireWallet,
   confirmCompleteRide,
 );
-router.post("/:id/rate", authorizeRoles("rider", "driver"), rateRide);
 
 export default router;
