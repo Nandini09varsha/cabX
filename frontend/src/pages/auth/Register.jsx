@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useAuth } from "../../context/AuthContext";
+import { apiError } from "../../lib/format";
 
 function Register() {
   const { register } = useAuth();
@@ -49,7 +50,7 @@ function Register() {
         navigate("/rider");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(apiError(err, "Registration failed"));
     } finally {
       setLoading(false);
     }

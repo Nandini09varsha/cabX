@@ -58,5 +58,8 @@ export function initials(name) {
 }
 
 export function apiError(error, fallback = "Something went wrong") {
-  return error?.response?.data?.message || error?.message || fallback;
+  if (!error?.response) {
+    return "Cannot reach the CabX API. Start the backend on port 5000.";
+  }
+  return error.response.data?.message || error.message || fallback;
 }
