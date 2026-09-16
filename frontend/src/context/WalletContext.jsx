@@ -31,8 +31,9 @@ export function WalletProvider({ children }) {
   };
 
   const ensureReady = async () => {
-    if (publicKey && user?.tokenAccount) {
-      return { address: publicKey, tokenAccount: user.tokenAccount };
+    const address = publicKey || user?.walletAddress;
+    if (address && user?.tokenAccount) {
+      return { address, tokenAccount: user.tokenAccount };
     }
     return connect();
   };

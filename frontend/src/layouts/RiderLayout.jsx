@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bell, Car, History, LayoutDashboard, LogOut, Menu, Navigation, Settings, ShieldCheck, UserRound, Wallet, X } from "lucide-react";
+import { Car, History, LayoutDashboard, LogOut, Menu, Navigation, Settings, ShieldCheck, UserRound, Wallet, X } from "lucide-react";
 import ThemeToggle from "../components/ThemeToggle";
 import { useAuth } from "../context/AuthContext";
-import { notifications } from "../data/riderMockData";
+import { shortAddress } from "../lib/format";
 
 const items = [
   ["Dashboard", "/rider", LayoutDashboard],
@@ -21,7 +21,6 @@ export default function RiderLayout({ children, activePage = "Dashboard" }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -51,9 +50,8 @@ export default function RiderLayout({ children, activePage = "Dashboard" }) {
         <header className="sticky top-0 z-30 hidden h-20 items-center justify-between border-b border-gray-200 bg-white px-8 dark:border-[#2A2A2A] dark:bg-[#111] lg:flex">
           <div><h2 className="text-xl font-bold">{activePage}</h2><p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Your CabX rider experience</p></div>
           <div className="flex items-center gap-3">
-            <div className="relative"><button onClick={() => setShowNotifications((v) => !v)} className="relative rounded-xl p-2.5 hover:bg-gray-100 dark:hover:bg-[#1F1F1F]"><Bell size={20} /><span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#F5C518]" /></button>{showNotifications && <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white p-3 shadow-xl dark:border-[#2A2A2A] dark:bg-[#171717]"><div className="flex items-center justify-between px-2 py-2"><b>Notifications</b><span className="text-xs text-gray-500">2 new</span></div>{notifications.map((n) => <div key={n.id} className="rounded-xl p-3 hover:bg-gray-50 dark:hover:bg-[#202020]"><p className="text-sm font-semibold">{n.title}</p><p className="text-xs text-gray-500 dark:text-gray-400">{n.text}</p><p className="mt-1 text-[11px] text-gray-400">{n.time}</p></div>)}</div>}</div>
             <ThemeToggle />
-            <div className="ml-2 flex items-center gap-3 border-l border-gray-200 pl-4 dark:border-[#2A2A2A]"><div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5C518] font-bold text-black">{user?.name?.[0]?.toUpperCase() || "R"}</div><div><p className="text-sm font-semibold">{user?.name || "Rider"}</p><p className="text-xs text-gray-500 dark:text-gray-400">Rider</p></div></div>
+            <div className="ml-2 flex items-center gap-3 border-l border-gray-200 pl-4 dark:border-[#2A2A2A]"><div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5C518] font-bold text-black">{user?.name?.[0]?.toUpperCase() || "R"}</div><div><p className="text-sm font-semibold">{user?.name || "Rider"}</p><p className="text-xs text-gray-500 dark:text-gray-400">{user?.walletAddress ? shortAddress(user.walletAddress) : "Wallet not linked"}</p></div></div>
           </div>
         </header>
         <div className="p-5 lg:p-8">{children}</div>
