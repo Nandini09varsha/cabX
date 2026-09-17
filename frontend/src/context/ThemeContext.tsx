@@ -15,7 +15,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
-
+    document.documentElement.style.colorScheme = darkMode ? "dark" : "light";
     localStorage.setItem("cabx-theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
