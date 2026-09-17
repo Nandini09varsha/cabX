@@ -1,13 +1,13 @@
-import DriverProfile from "../models/DriverProfile.js";
-import Payment from "../models/Payment.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
+import DriverProfile from "../models/DriverProfile.ts";
+import Payment from "../models/Payment.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
 import {
   buildInitializeAdminTx,
   buildSlashDriverTx,
   buildVerifyDriverTx,
-} from "../services/driverProgram.js";
-import { syncDriverFromChain } from "../services/sync.js";
-import { adminKeypair, hasAdminSigner } from "../config/solana.js";
+} from "../services/driverProgram.ts";
+import { syncDriverFromChain } from "../services/sync.ts";
+import { adminKeypair, hasAdminSigner } from "../config/solana.ts";
 
 export const initializeAdmin = asyncHandler(async (req, res) => {
   const authority = req.user.walletAddress || adminKeypair.publicKey.toBase58();

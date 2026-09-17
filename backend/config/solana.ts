@@ -3,7 +3,7 @@ import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { PROGRAM_ID } from "./constants.js";
+import { PROGRAM_ID } from "./constants.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const idl = JSON.parse(

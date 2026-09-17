@@ -1,6 +1,6 @@
 import express from "express";
-import { getProfile, updateProfile } from "../controllers/riderController.js";
-import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
+import { getProfile, updateProfile } from "../controllers/riderController.ts";
+import { protect, authorizeRoles } from "../middleware/authMiddleware.ts";
 
 const router = express.Router();
 

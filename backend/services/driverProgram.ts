@@ -1,7 +1,7 @@
 import { BN } from "@coral-xyz/anchor";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { program, getPaymentMint } from "../config/solana.js";
+import { program, getPaymentMint } from "../config/solana.ts";
 import {
   getAdminPda,
   getDriverPda,
@@ -10,8 +10,8 @@ import {
   getVaultAuthorityPda,
   toPublicKey,
   toRideIdBn,
-} from "./pdas.js";
-import { buildUnsignedTransaction } from "./tx.js";
+} from "./pdas.ts";
+import { buildUnsignedTransaction } from "./tx.ts";
 
 export async function buildRegisterDriverTx({
   authority,

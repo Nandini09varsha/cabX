@@ -1,9 +1,9 @@
-import Ride from "../models/Ride.js";
-import DriverProfile from "../models/DriverProfile.js";
-import Payment from "../models/Payment.js";
-import { chainStatusToLocal } from "./tx.js";
-import { fetchRideAccount, serializeRideAccount } from "./rideProgram.js";
-import { fetchDriverAccount, serializeDriverAccount } from "./driverProgram.js";
+import Ride from "../models/Ride.ts";
+import DriverProfile from "../models/DriverProfile.ts";
+import Payment from "../models/Payment.ts";
+import { chainStatusToLocal } from "./tx.ts";
+import { fetchRideAccount, serializeRideAccount } from "./rideProgram.ts";
+import { fetchDriverAccount, serializeDriverAccount } from "./driverProgram.ts";
 
 export async function syncRideFromChain(ride) {
   const { account } = await fetchRideAccount(ride.riderWallet, ride.rideId);

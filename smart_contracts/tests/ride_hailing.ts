@@ -40,7 +40,9 @@ describe("ride_hailing", () => {
   };
 
   const logStatus = (label: string, status: unknown) => {
-    console.log(`${label}: ${Object.keys(status as Record<string, unknown>)[0]}`);
+    console.log(
+      `${label}: ${Object.keys(status as Record<string, unknown>)[0]}`
+    );
   };
 
   const logTx = (label: string, signature: string) => {
@@ -98,8 +100,8 @@ describe("ride_hailing", () => {
           admin: adminPda,
           adminAuthority: provider.wallet.publicKey,
           systemProgram: SystemProgram.programId,
-      } as any)
-      .rpc();
+        } as any)
+        .rpc();
       logTx("initialize tx", tx);
     }
 
@@ -112,8 +114,9 @@ describe("ride_hailing", () => {
     signer: Keypair
   ) => {
     const tokenAccountKeypair = Keypair.generate();
-    const rentExemption =
-      await connection.getMinimumBalanceForRentExemption(165);
+    const rentExemption = await connection.getMinimumBalanceForRentExemption(
+      165
+    );
 
     const tx = new Transaction().add(
       SystemProgram.createAccount({
@@ -234,11 +237,8 @@ describe("ride_hailing", () => {
       rider.publicKey,
       10_000_000
     );
-    const { tokenAccount: vaultB, txSig: vaultCreationTx } = await createTokenAccount(
-      mint,
-      ridePda,
-      rider
-    );
+    const { tokenAccount: vaultB, txSig: vaultCreationTx } =
+      await createTokenAccount(mint, ridePda, rider);
 
     const source = new Uint8Array(32).fill(1);
     const destination = new Uint8Array(32).fill(2);
@@ -325,8 +325,7 @@ describe("ride_hailing", () => {
       destination,
       tx,
       vaultCreationTx,
-    } =
-      await requestRide(rider, mint, rideId);
+    } = await requestRide(rider, mint, rideId);
 
     const rideAccount = await program.account.ride.fetch(ridePda);
     const riderBalance = await getAccount(connection, riderTokenAccount);
@@ -360,14 +359,20 @@ describe("ride_hailing", () => {
       await registerDriver(driver, mint);
 
     const driverAccount = await program.account.driver.fetch(driverPda);
-    const driverWalletBalance = await getAccount(connection, driverTokenAccount);
+    const driverWalletBalance = await getAccount(
+      connection,
+      driverTokenAccount
+    );
     const driverVaultBalance = await getAccount(connection, driverVaultPda);
 
     logPubkey("Driver PDA", driverPda);
     logTx("register driver", tx);
     logValue("Stake locked", driverVaultBalance.amount.toString());
 
-    assert.equal(driverAccount.authority.toString(), driver.publicKey.toString());
+    assert.equal(
+      driverAccount.authority.toString(),
+      driver.publicKey.toString()
+    );
     assert.equal(driverAccount.stakeAmount.toNumber(), 1_000_000);
     assert.equal(driverAccount.isVerified, false);
     assert.equal(Number(driverWalletBalance.amount), 4_000_000);
@@ -545,7 +550,7 @@ describe("ride_hailing", () => {
       10_000_000
     );
     const vaultB = await createTokenAccount(mint, ridePda, rider);
- 
+
     await expectAnchorError(
       program.methods
         .requestRide(
@@ -582,7 +587,10 @@ describe("ride_hailing", () => {
     );
     await expectAnchorError(
       program.methods
-        .registerDriver(new anchor.BN(999_999), Array.from(new Uint8Array(32).fill(4)))
+        .registerDriver(
+          new anchor.BN(999_999),
+          Array.from(new Uint8Array(32).fill(4))
+        )
         .accounts({
           driver: driverPda,
           mint,
@@ -690,7 +698,10 @@ describe("ride_hailing", () => {
       assignedDriver,
       mint
     );
-    const { driverPda: otherDriverPda } = await registerDriver(otherDriver, mint);
+    const { driverPda: otherDriverPda } = await registerDriver(
+      otherDriver,
+      mint
+    );
     await verifyDriver(assignedDriverPda);
     await verifyDriver(otherDriverPda);
 
@@ -728,7 +739,10 @@ describe("ride_hailing", () => {
     const { ridePda, vaultB } = await requestRide(rider, mint, rideId);
     const { driverPda } = await registerDriver(driver, mint);
     await verifyDriver(driverPda);
-    const driverTokenAccount = await createUserTokenAccount(mint, driver.publicKey);
+    const driverTokenAccount = await createUserTokenAccount(
+      mint,
+      driver.publicKey
+    );
 
     const acceptTx = await program.methods
       .acceptRide(rideId)

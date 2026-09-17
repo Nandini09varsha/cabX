@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PublicKey } from "@solana/web3.js";
-import User from "../models/User.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
+import User from "../models/User.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
 
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {

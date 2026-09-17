@@ -1,12 +1,12 @@
 import express from "express";
-import { getRatings } from "../controllers/ratingController.js";
-import { listPayments } from "../controllers/paymentController.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { getRatings } from "../controllers/ratingController.ts";
+import { listPayments } from "../controllers/paymentController.ts";
+import { protect } from "../middleware/authMiddleware.ts";
 import {
   MIN_STAKE,
   PROGRAM_ID,
   VERIFY_VOTE_THRESHOLD,
-} from "../config/constants.js";
+} from "../config/constants.ts";
 
 const router = express.Router();
 
