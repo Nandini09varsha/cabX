@@ -53,15 +53,15 @@ export default function BookRide() {
     <RiderLayout activePage="Book a Ride">
       <div className="mb-7">
         <h1 className="text-3xl font-black">Book a Ride</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           Choose a route and lock fare into on-chain escrow.
         </p>
       </div>
       <WalletBar />
       <div className="grid gap-6 xl:grid-cols-[1fr_0.85fr]">
-        <div className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-3xl border border-border bg-card p-6 ">
           <div
-            className="h-64 rounded-2xl bg-[#e8e5dc] dark:bg-[#1d1d1d]"
+            className="h-64 rounded-2xl bg-muted"
             style={{
               backgroundImage:
                 "linear-gradient(35deg,transparent 48%,#bbb 49%,#bbb 51%,transparent 52%),linear-gradient(120deg,transparent 46%,#ccc 47%,#ccc 49%,transparent 50%)",
@@ -72,7 +72,7 @@ export default function BookRide() {
             <label className="block text-sm font-semibold">
               Pickup
               <input
-                className="mt-2 w-full rounded-xl border border-gray-200 bg-transparent p-3 outline-none dark:border-[#333]"
+                className="mt-2 w-full rounded-xl border border-border bg-transparent p-3 outline-none "
                 value={pickup}
                 onChange={(e) => setPickup(e.target.value)}
               />
@@ -80,7 +80,7 @@ export default function BookRide() {
             <label className="block text-sm font-semibold">
               Destination
               <input
-                className="mt-2 w-full rounded-xl border border-gray-200 bg-transparent p-3 outline-none dark:border-[#333]"
+                className="mt-2 w-full rounded-xl border border-border bg-transparent p-3 outline-none "
                 placeholder="Enter destination"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
@@ -88,7 +88,7 @@ export default function BookRide() {
             </label>
           </div>
         </div>
-        <div className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-3xl border border-border bg-card p-6 ">
           <h2 className="text-lg font-bold">Choose your ride</h2>
           <div className="mt-4 space-y-2">
             {rideTypes.map((r) => (
@@ -97,17 +97,17 @@ export default function BookRide() {
                 onClick={() => setType(r.id)}
                 className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left ${
                   type === r.id
-                    ? "border-[#F5C518] bg-[#FFF9E5] dark:bg-[#2A2410]"
-                    : "border-gray-200 dark:border-[#333]"
+                    ? "border-primary bg-accent-soft"
+                    : "border-border"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
                     <Car size={19} />
                   </div>
                   <div>
                     <b>{r.label}</b>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                       {r.seats} seats · {r.eta} away
                     </p>
                   </div>
@@ -116,7 +116,7 @@ export default function BookRide() {
               </button>
             ))}
           </div>
-          <div className="mt-5 space-y-3 rounded-2xl bg-gray-50 p-4 dark:bg-[#1e1e1e]">
+          <div className="mt-5 space-y-3 rounded-2xl bg-muted/50 p-4">
             <div className="flex justify-between text-sm">
               <span>Distance</span>
               <b>{selected?.distanceKm} km</b>
@@ -131,7 +131,7 @@ export default function BookRide() {
                 <Wallet size={15} /> Escrow
               </b>
             </div>
-            <div className="flex justify-between border-t border-gray-200 pt-3 text-lg dark:border-[#333]">
+            <div className="flex justify-between border-t border-border pt-3 text-lg ">
               <b>Escrow fare</b>
               <b>₹{selected?.fare}</b>
             </div>
@@ -140,7 +140,7 @@ export default function BookRide() {
           <button
             onClick={handleConfirm}
             disabled={!destination || busy}
-            className="mt-5 w-full rounded-xl bg-[#F5C518] px-5 py-3 font-bold text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-5 w-full rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
           >
             {busy ? "Waiting for wallet..." : "Confirm and lock escrow"}
           </button>

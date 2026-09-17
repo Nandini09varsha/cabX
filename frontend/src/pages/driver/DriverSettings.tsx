@@ -52,23 +52,23 @@ function DriverSettings() {
         <div>
           <h1 className="text-2xl font-black sm:text-3xl">Settings</h1>
 
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-muted-foreground">
             Manage your CabX driver preferences and account settings.
           </p>
         </div>
 
         {/* Appearance */}
-        <section className="rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="border-b border-gray-200 p-6 dark:border-[#2A2A2A]">
+        <section className="rounded-2xl border border-border bg-card ">
+          <div className="border-b border-border p-6 ">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
                 <Smartphone size={19} />
               </div>
 
               <div>
                 <h2 className="font-bold">Appearance</h2>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   Customize how CabX looks on your device.
                 </p>
               </div>
@@ -79,7 +79,7 @@ function DriverSettings() {
             <div>
               <p className="font-semibold">Theme</p>
 
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Switch between light and dark mode.
               </p>
             </div>
@@ -89,24 +89,24 @@ function DriverSettings() {
         </section>
 
         {/* Notifications */}
-        <section className="rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="border-b border-gray-200 p-6 dark:border-[#2A2A2A]">
+        <section className="rounded-2xl border border-border bg-card ">
+          <div className="border-b border-border p-6 ">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
                 <Bell size={19} />
               </div>
 
               <div>
                 <h2 className="font-bold">Notifications</h2>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   Choose which notifications you want to receive.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="divide-y divide-gray-200 dark:divide-[#2A2A2A]">
+          <div className="divide-y divide-border">
             <SettingToggle
               title="Ride Requests"
               description="Get notified when a nearby rider requests a ride."
@@ -131,24 +131,24 @@ function DriverSettings() {
         </section>
 
         {/* Ride Preferences */}
-        <section className="rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="border-b border-gray-200 p-6 dark:border-[#2A2A2A]">
+        <section className="rounded-2xl border border-border bg-card ">
+          <div className="border-b border-border p-6 ">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
                 <Car size={19} />
               </div>
 
               <div>
                 <h2 className="font-bold">Ride Preferences</h2>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   Configure how you receive ride requests.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="divide-y divide-gray-200 dark:divide-[#2A2A2A]">
+          <div className="divide-y divide-border">
             <SettingToggle
               title="Ride Request Alerts"
               description="Show alerts when new ride requests become available."
@@ -167,24 +167,24 @@ function DriverSettings() {
         </section>
 
         {/* Privacy & Security */}
-        <section className="rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="border-b border-gray-200 p-6 dark:border-[#2A2A2A]">
+        <section className="rounded-2xl border border-border bg-card ">
+          <div className="border-b border-border p-6 ">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
                 <ShieldCheck size={19} />
               </div>
 
               <div>
                 <h2 className="font-bold">Privacy & Security</h2>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   Manage your account security.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="divide-y divide-gray-200 dark:divide-[#2A2A2A]">
+          <div className="divide-y divide-border">
             <SettingsLink
               icon={<Lock size={18} />}
               title="Change Password"
@@ -200,24 +200,24 @@ function DriverSettings() {
         </section>
 
         {/* Account */}
-        <section className="rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <div className="border-b border-gray-200 p-6 dark:border-[#2A2A2A]">
+        <section className="rounded-2xl border border-border bg-card ">
+          <div className="border-b border-border p-6 ">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]/20">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
                 <UserRound size={19} />
               </div>
 
               <div>
                 <h2 className="font-bold">Account</h2>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-muted-foreground">
                   Manage your CabX driver account.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="divide-y divide-gray-200 dark:divide-[#2A2A2A]">
+          <div className="divide-y divide-border">
             <SettingsLink
               icon={<UserRound size={18} />}
               title="Profile"
@@ -240,9 +240,9 @@ function DriverSettings() {
 
         {/* Footer */}
         <div className="pb-4 text-center">
-          <p className="text-xs text-gray-400">CabX Driver Portal</p>
+          <p className="text-xs text-muted-foreground">CabX Driver Portal</p>
 
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
+          <p className="mt-1 text-xs text-muted-foreground dark:text-muted-foreground">
             Settings are saved locally for now.
           </p>
         </div>
@@ -257,12 +257,12 @@ function SettingToggle({ title, description, enabled, onClick, icon }) {
   return (
     <div className="flex items-center justify-between gap-5 p-5 sm:p-6">
       <div className="flex min-w-0 items-center gap-3">
-        {icon && <div className="hidden text-gray-500 sm:block">{icon}</div>}
+        {icon && <div className="hidden text-muted-foreground sm:block">{icon}</div>}
 
         <div>
           <p className="text-sm font-semibold">{title}</p>
 
-          <p className="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
             {description}
           </p>
         </div>
@@ -272,11 +272,11 @@ function SettingToggle({ title, description, enabled, onClick, icon }) {
         onClick={onClick}
         aria-label={`Toggle ${title}`}
         className={`relative h-6 w-11 shrink-0 rounded-full transition ${
-          enabled ? "bg-[#F5C518]" : "bg-gray-300 dark:bg-gray-700"
+          enabled ? "bg-primary" : "bg-muted"
         }`}
       >
         <span
-          className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow transition ${
+          className={`absolute top-1 h-4 w-4 rounded-full bg-card shadow transition ${
             enabled ? "left-6" : "left-1"
           }`}
         />
@@ -294,13 +294,13 @@ function SettingsLink({ icon, title, description, onClick, danger = false }) {
       className={`flex w-full items-center justify-between gap-4 p-5 text-left transition sm:p-6 ${
         danger
           ? "hover:bg-red-50 dark:hover:bg-red-950/20"
-          : "hover:bg-gray-50 dark:hover:bg-[#1E1E1E]"
+          : "hover:bg-muted/50"
       }`}
     >
       <div className="flex items-center gap-3">
         <div
           className={`${
-            danger ? "text-red-500" : "text-gray-500 dark:text-gray-400"
+            danger ? "text-red-500" : "text-muted-foreground"
           }`}
         >
           {icon}
@@ -313,13 +313,13 @@ function SettingsLink({ icon, title, description, onClick, danger = false }) {
             {title}
           </p>
 
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-xs text-muted-foreground">
             {description}
           </p>
         </div>
       </div>
 
-      {!danger && <ChevronRight size={18} className="shrink-0 text-gray-400" />}
+      {!danger && <ChevronRight size={18} className="shrink-0 text-muted-foreground" />}
     </button>
   );
 }

@@ -51,10 +51,10 @@ export default function RideDetails() {
       <Link to="/rider/history" className="mb-6 inline-flex items-center gap-2 text-sm font-semibold">
         <ArrowLeft size={17} /> Back to history
       </Link>
-      <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-7 dark:border-[#2A2A2A] dark:bg-[#171717]">
+      <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-card p-7 ">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-gray-500">Ride #{ride.rideId}</p>
+            <p className="text-sm text-muted-foreground">Ride #{ride.rideId}</p>
             <h1 className="mt-1 text-2xl font-black">
               {ride.source} → {ride.destination}
             </h1>
@@ -62,39 +62,39 @@ export default function RideDetails() {
           <StatusBadge status={ride.status} />
         </div>
         <div className="mt-7 grid grid-cols-2 gap-3">
-          <div className="rounded-2xl bg-gray-50 p-4 dark:bg-[#1e1e1e]">
-            <p className="text-xs text-gray-500">Date</p>
+          <div className="rounded-2xl bg-muted/50 p-4">
+            <p className="text-xs text-muted-foreground">Date</p>
             <b>{formatDate(ride.createdAt)}</b>
           </div>
-          <div className="rounded-2xl bg-gray-50 p-4 dark:bg-[#1e1e1e]">
-            <p className="text-xs text-gray-500">Payment</p>
+          <div className="rounded-2xl bg-muted/50 p-4">
+            <p className="text-xs text-muted-foreground">Payment</p>
             <b>On-chain escrow</b>
           </div>
         </div>
-        <div className="my-7 space-y-5 border-y border-gray-200 py-6 dark:border-[#333]">
+        <div className="my-7 space-y-5 border-y border-border py-6 ">
           <div className="flex gap-3">
-            <MapPin className="text-[#C9A000]" />
+            <MapPin className="text-primary" />
             <div>
-              <p className="text-xs text-gray-500">Pickup</p>
+              <p className="text-xs text-muted-foreground">Pickup</p>
               <b>{ride.source}</b>
             </div>
           </div>
           <div className="flex gap-3">
             <MapPin />
             <div>
-              <p className="text-xs text-gray-500">Destination</p>
+              <p className="text-xs text-muted-foreground">Destination</p>
               <b>{ride.destination}</b>
             </div>
           </div>
         </div>
         {ride.driver && (
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5C518] font-bold">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-bold">
               {initials(ride.driver.name)}
             </div>
             <div>
               <b>{ride.driver.name}</b>
-              <p className="text-xs text-gray-500">{ride.driver.walletAddress}</p>
+              <p className="text-xs text-muted-foreground">{ride.driver.walletAddress}</p>
             </div>
           </div>
         )}
@@ -103,7 +103,7 @@ export default function RideDetails() {
             <span>Distance</span>
             <b>{ride.distanceKm || "—"} km</b>
           </div>
-          <div className="flex justify-between border-t border-gray-200 pt-3 text-lg dark:border-[#333]">
+          <div className="flex justify-between border-t border-border pt-3 text-lg ">
             <b>Total fare</b>
             <b>{formatFare(ride.amount)}</b>
           </div>
@@ -112,7 +112,7 @@ export default function RideDetails() {
           <div className="mt-6">
             <p className="mb-2 text-sm font-semibold">Rate driver</p>
             <RatingStars value={score} onChange={setScore} />
-            <button onClick={rate} className="mt-4 w-full rounded-xl bg-[#F5C518] py-3 font-bold text-black">
+            <button onClick={rate} className="mt-4 w-full rounded-xl bg-primary py-3 font-bold text-primary-foreground">
               Submit rating
             </button>
           </div>

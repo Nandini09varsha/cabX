@@ -17,8 +17,8 @@ export default function RatingStars({ value = 0, onChange, size = 18 }) {
             size={size}
             className={
               star <= score
-                ? "fill-current text-[#F5C518]"
-                : "text-gray-300 dark:text-gray-600"
+                ? "fill-current text-primary"
+                : "text-muted"
             }
           />
         </button>

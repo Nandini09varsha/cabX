@@ -2,7 +2,8 @@ function Button({ children, loading, className = "", ...props }) {
   return (
     <button
       disabled={loading || props.disabled}
-      className={`flex w-full items-center justify-center gap-2 rounded-full bg-[#0B0B0B] px-6 py-3 font-semibold text-white transition hover:bg-[#F5C518] hover:text-black disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#F5C518] dark:text-black dark:hover:bg-white ${className}`}
+      aria-busy={loading || undefined}
+      className={`flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
       {...props}
     >
       {loading ? "Please wait..." : children}

@@ -58,18 +58,18 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F7F5] text-[#0B0B0B] dark:bg-[#0B0B0B] dark:text-white">
-      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-gray-200 bg-white/95 px-4 py-4 backdrop-blur dark:border-[#2A2A2A] dark:bg-[#111111]/95 lg:hidden">
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border bg-card/95 px-4 py-4 backdrop-blur lg:hidden">
         <button
           onClick={() => setSidebarOpen(true)}
-          className="rounded-lg p-2 transition hover:bg-gray-100 dark:hover:bg-[#222]"
+          className="rounded-lg p-2 transition hover:bg-muted"
           aria-label="Open menu"
         >
           <Menu size={22} />
         </button>
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F5C518]">
-            <Car size={18} className="text-black" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+            <Car size={18} className="text-primary-foreground" />
           </div>
           <span className="text-xl font-black tracking-tight">CABX</span>
         </div>
@@ -85,37 +85,37 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-gray-200 bg-white transition-transform duration-300 dark:border-[#2A2A2A] dark:bg-[#111111] ${
+        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-border bg-card transition-transform duration-300  ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
-        <div className="flex h-20 items-center justify-between border-b border-gray-200 px-6 dark:border-[#2A2A2A]">
+        <div className="flex h-20 items-center justify-between border-b border-border px-6 ">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518]">
-              <Car size={22} className="text-black" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
+              <Car size={22} className="text-primary-foreground" />
             </div>
             <div>
               <h1 className="text-xl font-black tracking-tight">CABX</h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Driver Portal</p>
+              <p className="text-xs text-muted-foreground">Driver Portal</p>
             </div>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-[#222] lg:hidden"
+            className="rounded-lg p-2 hover:bg-muted lg:hidden"
             aria-label="Close menu"
           >
             <X size={20} />
           </button>
         </div>
 
-        <div className="border-b border-gray-200 p-5 dark:border-[#2A2A2A]">
+        <div className="border-b border-border p-5 ">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F5C518] font-bold text-black">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
               {user?.name?.charAt(0)?.toUpperCase() || "D"}
             </div>
             <div className="min-w-0">
               <p className="truncate font-semibold">{user?.name || "CabX Driver"}</p>
-              <div className="mt-1 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+              <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                 <Star size={12} className="fill-current" />
                 <span>{Number(rating || 0).toFixed(1)} Rating</span>
               </div>
@@ -135,8 +135,8 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
                 onClick={() => setSidebarOpen(false)}
                 className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
                   isActive
-                    ? "bg-[#F5C518] text-black"
-                    : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-[#1F1F1F]"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
                 <Icon size={19} />
@@ -146,10 +146,10 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
           })}
         </nav>
 
-        <div className="border-t border-gray-200 p-4 dark:border-[#2A2A2A]">
+        <div className="border-t border-border p-4 ">
           <button
             onClick={toggleOnline}
-            className="mb-3 flex w-full items-center justify-between rounded-xl bg-gray-100 px-4 py-3 dark:bg-[#1B1B1B]"
+            className="mb-3 flex w-full items-center justify-between rounded-xl bg-gray-100 px-4 py-3 dark:bg-muted"
           >
             <div className="flex items-center gap-2">
               <div className={`h-2.5 w-2.5 rounded-full ${isOnline ? "bg-green-500" : "bg-gray-400"}`} />
@@ -159,11 +159,11 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
             </div>
             <div
               className={`relative h-5 w-9 rounded-full transition ${
-                isOnline ? "bg-[#F5C518]" : "bg-gray-300 dark:bg-gray-700"
+                isOnline ? "bg-primary" : "bg-muted"
               }`}
             >
               <div
-                className={`absolute top-1 h-3 w-3 rounded-full bg-white shadow transition ${
+                className={`absolute top-1 h-3 w-3 rounded-full bg-card shadow transition ${
                   isOnline ? "left-5" : "left-1"
                 }`}
               />
@@ -174,7 +174,7 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
               logout();
               navigate("/");
             }}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-600 transition hover:bg-red-50 hover:text-red-600 dark:text-gray-300 dark:hover:bg-red-950/30 dark:hover:text-red-400"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 dark:hover:text-red-400"
           >
             <LogOut size={19} />
             Logout
@@ -183,22 +183,22 @@ function DriverLayout({ children, activePage = "Dashboard" }) {
       </aside>
 
       <main className="min-h-screen lg:ml-72">
-        <header className="sticky top-0 z-50 hidden h-20 items-center justify-between border-b border-gray-200 bg-white px-8 dark:border-[#2A2A2A] dark:bg-[#111111] lg:flex">
+        <header className="sticky top-0 z-50 hidden h-20 items-center justify-between border-b border-border bg-card px-8  lg:flex">
           <div>
             <h2 className="text-xl font-bold">{activePage}</h2>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-muted-foreground">
               Manage your CabX driver account
             </p>
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <div className="ml-2 flex items-center gap-3 border-l border-gray-200 pl-4 dark:border-[#2A2A2A]">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5C518] font-bold text-black">
+            <div className="ml-2 flex items-center gap-3 border-l border-border pl-4 ">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-primary-foreground">
                 {user?.name?.charAt(0)?.toUpperCase() || "D"}
               </div>
               <div>
                 <p className="text-sm font-semibold">{user?.name || "Driver"}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Driver</p>
+                <p className="text-xs text-muted-foreground">Driver</p>
               </div>
             </div>
           </div>

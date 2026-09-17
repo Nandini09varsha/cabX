@@ -24,18 +24,18 @@ function RideHistory() {
   return (
     <DriverLayout activePage="Ride History">
       <h1 className="text-2xl font-black sm:text-3xl">Ride History</h1>
-      <p className="mt-1 mb-6 text-sm text-gray-500">Your assigned trips from the CabX program.</p>
+      <p className="mt-1 mb-6 text-sm text-muted-foreground">Your assigned trips from the CabX program.</p>
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <p className="text-sm text-gray-500">Total rides</p>
+        <div className="rounded-2xl border border-border bg-card p-5 ">
+          <p className="text-sm text-muted-foreground">Total rides</p>
           <p className="mt-2 text-2xl font-black">{rides.length}</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
-          <p className="text-sm text-gray-500">Completed earnings</p>
+        <div className="rounded-2xl border border-border bg-card p-5 ">
+          <p className="text-sm text-muted-foreground">Completed earnings</p>
           <p className="mt-2 text-2xl font-black">{formatFare(totalEarnings)}</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-2xl border border-border bg-card p-5 ">
           <Route size={21} />
           <p className="mt-2 text-2xl font-black">{totalDistance.toFixed(1)} km</p>
         </div>
@@ -47,16 +47,16 @@ function RideHistory() {
           {rides.map((ride) => (
             <div
               key={ride._id}
-              className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]"
+              className="overflow-hidden rounded-2xl border border-border bg-card "
             >
-              <div className="flex flex-col gap-4 border-b border-gray-200 p-5 dark:border-[#2A2A2A] sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-4 border-b border-border p-5  sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5C518] font-black">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-black">
                     {initials(ride.rider?.name)}
                   </div>
                   <div>
                     <p className="font-bold">{ride.rider?.name || "Rider"}</p>
-                    <p className="text-xs text-gray-500">{formatDate(ride.createdAt)}</p>
+                    <p className="text-xs text-muted-foreground">{formatDate(ride.createdAt)}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -71,7 +71,7 @@ function RideHistory() {
                 <p className="mt-2 flex items-center gap-2 text-sm">
                   <Navigation size={14} /> {ride.destination}
                 </p>
-                <p className="mt-3 flex items-center gap-2 text-xs text-gray-500">
+                <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                   <Clock3 size={12} /> {ride.durationMin || "—"} min
                   {ride.status === "completed" && (
                     <span className="ml-2 inline-flex items-center gap-1 text-green-600">

@@ -57,7 +57,7 @@ export default function CurrentRide() {
     <RiderLayout activePage="Current Ride">
       <div className="mb-7">
         <h1 className="text-3xl font-black">Current Ride</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           Track escrow status from request to completion.
         </p>
       </div>
@@ -73,50 +73,50 @@ export default function CurrentRide() {
         />
       ) : (
         <div className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
-          <div className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]">
+          <div className="rounded-3xl border border-border bg-card p-6 ">
             <div className="flex items-center justify-between">
               <StatusBadge status={ride.status} />
-              <p className="text-sm text-gray-500">Ride #{ride.rideId}</p>
+              <p className="text-sm text-muted-foreground">Ride #{ride.rideId}</p>
             </div>
             <div className="mt-8 space-y-5">
               <div className="flex gap-3">
-                <MapPin size={18} className="mt-0.5 text-[#C9A000]" />
+                <MapPin size={18} className="mt-0.5 text-primary" />
                 <div>
-                  <p className="text-xs text-gray-500">Pickup</p>
+                  <p className="text-xs text-muted-foreground">Pickup</p>
                   <b>{ride.source}</b>
                 </div>
               </div>
               <div className="flex gap-3">
                 <MapPin size={18} className="mt-0.5" />
                 <div>
-                  <p className="text-xs text-gray-500">Destination</p>
+                  <p className="text-xs text-muted-foreground">Destination</p>
                   <b>{ride.destination}</b>
                 </div>
               </div>
             </div>
-            <div className="mt-6 flex justify-between border-t border-gray-200 pt-4 dark:border-[#333]">
-              <span className="text-gray-500">Escrow fare</span>
+            <div className="mt-6 flex justify-between border-t border-border pt-4 ">
+              <span className="text-muted-foreground">Escrow fare</span>
               <b>{formatFare(ride.amount)}</b>
             </div>
           </div>
-          <div className="rounded-3xl border border-gray-200 bg-white p-6 dark:border-[#2A2A2A] dark:bg-[#171717]">
+          <div className="rounded-3xl border border-border bg-card p-6 ">
             {ride.driver ? (
               <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F5C518] text-lg font-black">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-black">
                   {initials(ride.driver.name)}
                 </div>
                 <div>
                   <b>{ride.driver.name}</b>
-                  <p className="flex items-center gap-1 text-sm text-gray-500">
+                  <p className="flex items-center gap-1 text-sm text-muted-foreground">
                     <Star size={13} className="fill-current" />{" "}
                     {Number(ride.driver.rating || 0).toFixed(1)}
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="mb-5 rounded-2xl bg-[#FFF9E5] p-4 dark:bg-[#2A2410]">
+              <div className="mb-5 rounded-2xl bg-accent-soft p-4">
                 <p className="font-semibold">Waiting for a driver</p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   Your request is open on-chain.
                 </p>
               </div>
@@ -136,7 +136,7 @@ export default function CurrentRide() {
                 <RatingStars value={score} onChange={setScore} />
                 <button
                   onClick={rate}
-                  className="mt-4 w-full rounded-xl bg-[#F5C518] py-3 font-bold text-black"
+                  className="mt-4 w-full rounded-xl bg-primary py-3 font-bold text-primary-foreground"
                 >
                   Submit rating
                 </button>

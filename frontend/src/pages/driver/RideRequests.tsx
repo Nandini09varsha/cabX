@@ -38,7 +38,7 @@ function RideRequests() {
     <DriverLayout activePage="Ride Requests">
       <div className="mb-6">
         <h1 className="text-2xl font-black sm:text-3xl">Ride Requests</h1>
-        <p className="mt-1 text-sm text-gray-500">Open escrowed rides waiting for a driver.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Open escrowed rides waiting for a driver.</p>
       </div>
       <WalletBar />
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
@@ -53,42 +53,42 @@ function RideRequests() {
           {requests.map((request) => (
             <div
               key={request._id}
-              className="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#171717]"
+              className="overflow-hidden rounded-2xl border border-border bg-card "
             >
-              <div className="flex flex-col gap-4 border-b border-gray-200 p-5 dark:border-[#2A2A2A] md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col gap-4 border-b border-border p-5  md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5C518] text-lg font-black text-black">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-lg font-black text-primary-foreground">
                     {initials(request.rider?.name)}
                   </div>
                   <div>
                     <p className="font-bold">{request.rider?.name || "Rider"}</p>
-                    <div className="mt-1 flex items-center gap-1 text-xs text-gray-500">
-                      <Star size={12} className="fill-current text-[#F5C518]" />
+                    <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                      <Star size={12} className="fill-current text-primary" />
                       <span>{Number(request.rider?.rating || 0).toFixed(1)}</span>
                     </div>
                   </div>
                 </div>
                 <div className="md:text-right">
-                  <p className="text-xs text-gray-500">Escrow fare</p>
+                  <p className="text-xs text-muted-foreground">Escrow fare</p>
                   <p className="text-2xl font-black">{formatFare(request.amount)}</p>
                 </div>
               </div>
               <div className="p-5">
                 <div className="flex gap-4">
                   <div className="flex flex-col items-center pt-1">
-                    <div className="h-3.5 w-3.5 rounded-full border-[3px] border-[#F5C518]" />
-                    <div className="my-1 h-12 border-l border-dashed border-gray-300" />
-                    <div className="h-3.5 w-3.5 rounded-sm bg-black dark:bg-white" />
+                    <div className="h-3.5 w-3.5 rounded-full border-[3px] border-primary" />
+                    <div className="my-1 h-12 border-l border-dashed border-border" />
+                    <div className="h-3.5 w-3.5 rounded-sm bg-black dark:bg-card" />
                   </div>
                   <div className="flex-1 space-y-5">
                     <div>
-                      <p className="flex items-center gap-2 text-[11px] font-semibold uppercase text-gray-400">
+                      <p className="flex items-center gap-2 text-[11px] font-semibold uppercase text-muted-foreground">
                         <MapPin size={14} /> Pickup
                       </p>
                       <p className="mt-1 text-sm font-semibold">{request.source}</p>
                     </div>
                     <div>
-                      <p className="flex items-center gap-2 text-[11px] font-semibold uppercase text-gray-400">
+                      <p className="flex items-center gap-2 text-[11px] font-semibold uppercase text-muted-foreground">
                         <Navigation size={14} /> Destination
                       </p>
                       <p className="mt-1 text-sm font-semibold">{request.destination}</p>
@@ -96,18 +96,18 @@ function RideRequests() {
                   </div>
                 </div>
                 <div className="mt-5 grid grid-cols-3 gap-2">
-                  <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E]">
-                    <p className="text-[11px] text-gray-400">Distance</p>
+                  <div className="rounded-xl bg-muted/50 p-3 text-center">
+                    <p className="text-[11px] text-muted-foreground">Distance</p>
                     <p className="mt-1 text-sm font-bold">{request.distanceKm || "—"} km</p>
                   </div>
-                  <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E]">
-                    <Clock3 size={16} className="mx-auto mb-1 text-gray-500" />
-                    <p className="text-[11px] text-gray-400">Duration</p>
+                  <div className="rounded-xl bg-muted/50 p-3 text-center">
+                    <Clock3 size={16} className="mx-auto mb-1 text-muted-foreground" />
+                    <p className="text-[11px] text-muted-foreground">Duration</p>
                     <p className="mt-1 text-sm font-bold">{request.durationMin || "—"} min</p>
                   </div>
-                  <div className="rounded-xl bg-gray-50 p-3 text-center dark:bg-[#1E1E1E]">
-                    <Wallet size={16} className="mx-auto mb-1 text-gray-500" />
-                    <p className="text-[11px] text-gray-400">Fare</p>
+                  <div className="rounded-xl bg-muted/50 p-3 text-center">
+                    <Wallet size={16} className="mx-auto mb-1 text-muted-foreground" />
+                    <p className="text-[11px] text-muted-foreground">Fare</p>
                     <p className="mt-1 text-sm font-bold">{formatFare(request.amount)}</p>
                   </div>
                 </div>
@@ -121,7 +121,7 @@ function RideRequests() {
                   <button
                     onClick={() => handleAccept(request)}
                     disabled={busy}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-[#F5C518] px-4 py-3 text-sm font-bold text-black"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
                   >
                     <Check size={17} /> {busy ? "Signing..." : "Accept Ride"}
                   </button>
