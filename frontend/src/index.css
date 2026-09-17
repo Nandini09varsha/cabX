@@ -2,12 +2,59 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+/* CabX tokens — 60% warm parchment, 30% espresso ink, 10% harvest gold */
+@theme {
+  --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ring: var(--ring);
+  --color-accent-soft: var(--accent-soft);
+  --color-destructive: var(--destructive);
+}
+
+:root {
+  --background: #f3eee4;
+  --foreground: #1c1914;
+  --card: #fffdf8;
+  --card-foreground: #1c1914;
+  --muted: #e8e0d2;
+  --muted-foreground: #5f574c;
+  --border: #ddd4c6;
+  --primary: #c47b0a;
+  --primary-foreground: #1c1914;
+  --ink: #1c1914;
+  --ink-foreground: #f7f0e4;
+  --ring: #c47b0a;
+  --accent-soft: #f4e4bf;
+  --destructive: #b42318;
+}
+
+html.dark {
+  --background: #14110d;
+  --foreground: #f3ede3;
+  --card: #1c1814;
+  --card-foreground: #f3ede3;
+  --muted: #2a241c;
+  --muted-foreground: #b8afa2;
+  --border: #3a332a;
+  --primary: #e4b84a;
+  --primary-foreground: #1c1914;
+  --ink: #1c1814;
+  --ink-foreground: #f3ede3;
+  --ring: #e4b84a;
+  --accent-soft: #2e2618;
+  --destructive: #f97066;
 }
 
 * {
@@ -18,28 +65,38 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   margin: 0;
   min-width: 320px;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
 button {
   cursor: pointer;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  background: #f7f7f5;
-  color: #0b0b0b;
-}
-
-html.dark body {
-  background: #0b0b0b;
-  color: #ffffff;
 }

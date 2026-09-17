@@ -72,7 +72,7 @@ export default function AdminDashboard() {
   return (
     <AdminLayout activePage="Overview">
       <h1 className="text-3xl font-black">Admin control</h1>
-      <p className="mt-1 mb-6 text-sm text-gray-500">
+      <p className="mt-1 mb-6 text-sm text-muted-foreground">
         Initialize program admin state, verify drivers, and slash stake.
       </p>
       <WalletBar />
@@ -81,14 +81,14 @@ export default function AdminDashboard() {
       <button
         onClick={initialize}
         disabled={busy}
-        className="mb-6 rounded-xl bg-[#F5C518] px-5 py-3 font-bold text-black"
+        className="mb-6 rounded-xl bg-primary px-5 py-3 font-bold text-primary-foreground"
       >
         {busy ? "Signing..." : "Initialize admin state"}
       </button>
       <label className="mb-4 block max-w-xs text-sm font-medium">
         Slash amount
         <input
-          className="mt-2 w-full rounded-xl border border-gray-200 bg-transparent p-3 dark:border-[#333]"
+          className="mt-2 w-full rounded-xl border border-border bg-transparent p-3 "
           value={slashAmount}
           onChange={(e) => setSlashAmount(e.target.value)}
         />
@@ -97,15 +97,15 @@ export default function AdminDashboard() {
         {drivers.map((driver) => (
           <div
             key={driver._id}
-            className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between dark:border-[#2A2A2A] dark:bg-[#171717]"
+            className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 sm:flex-row sm:items-center sm:justify-between "
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5C518] font-black">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-black">
                 {initials(driver.user?.name)}
               </div>
               <div>
                 <b>{driver.user?.name}</b>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   Stake {formatToken(driver.stakeAmount, decimals)} CX · votes {driver.voteCount || 0} ·{" "}
                   {driver.isVerified ? "Verified" : "Unverified"}
                 </p>
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
               {!driver.isVerified && (
                 <button
                   onClick={() => verify(driver._id)}
-                  className="rounded-xl bg-[#F5C518] px-4 py-2 text-sm font-bold text-black"
+                  className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
                 >
                   Verify
                 </button>
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         ))}
-        {drivers.length === 0 && <p className="text-sm text-gray-500">No drivers registered yet.</p>}
+        {drivers.length === 0 && <p className="text-sm text-muted-foreground">No drivers registered yet.</p>}
       </div>
     </AdminLayout>
   );

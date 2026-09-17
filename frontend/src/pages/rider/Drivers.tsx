@@ -33,7 +33,7 @@ export default function Drivers() {
     <RiderLayout activePage="Drivers">
       <div className="mb-7">
         <h1 className="text-3xl font-black">Community drivers</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           Vote to help verify staked drivers. GPS tracking is paused for now.
         </p>
       </div>
@@ -46,15 +46,15 @@ export default function Drivers() {
           {drivers.map((driver) => (
             <div
               key={driver._id}
-              className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between dark:border-[#2A2A2A] dark:bg-[#171717]"
+              className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 sm:flex-row sm:items-center sm:justify-between "
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5C518] font-black">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-black">
                   {initials(driver.user?.name)}
                 </div>
                 <div>
                   <b>{driver.user?.name || "Driver"}</b>
-                  <p className="flex items-center gap-1 text-xs text-gray-500">
+                  <p className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Star size={12} className="fill-current" />
                     {Number(driver.user?.rating || 0).toFixed(1)} · {driver.voteCount || 0} votes
                     {driver.isVerified ? " · Verified" : " · Unverified"}
@@ -63,7 +63,7 @@ export default function Drivers() {
               </div>
               <button
                 onClick={() => vote(driver._id)}
-                className="rounded-xl bg-[#F5C518] px-4 py-2 text-sm font-bold text-black"
+                className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
               >
                 Vote to verify
               </button>

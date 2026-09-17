@@ -13,13 +13,13 @@ export default function AdminLayout({ children, activePage = "Overview" }) {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#F7F7F5] text-[#0B0B0B] dark:bg-[#0B0B0B] dark:text-white">
-      <aside className="fixed inset-y-0 left-0 hidden w-72 flex-col border-r border-gray-200 bg-white dark:border-[#2A2A2A] dark:bg-[#111] lg:flex">
-        <div className="flex h-20 items-center gap-3 border-b border-gray-200 px-6 dark:border-[#2A2A2A]">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F5C518] font-black">C</div>
+    <div className="min-h-screen bg-background text-foreground">
+      <aside className="fixed inset-y-0 left-0 hidden w-72 flex-col border-r border-border bg-card  lg:flex">
+        <div className="flex h-20 items-center gap-3 border-b border-border px-6 ">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary font-black">C</div>
           <div>
             <b className="text-xl">CABX</b>
-            <p className="text-xs text-gray-500">Admin</p>
+            <p className="text-xs text-muted-foreground">Admin</p>
           </div>
         </div>
         <nav className="flex-1 space-y-1 p-4">
@@ -29,8 +29,8 @@ export default function AdminLayout({ children, activePage = "Overview" }) {
               to={path}
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium ${
                 activePage === label
-                  ? "bg-[#F5C518] text-black"
-                  : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-[#1F1F1F]"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
               <Icon size={18} />
@@ -49,7 +49,7 @@ export default function AdminLayout({ children, activePage = "Overview" }) {
         </button>
       </aside>
       <main className="lg:ml-72">
-        <header className="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6 dark:border-[#2A2A2A] dark:bg-[#111]">
+        <header className="flex h-20 items-center justify-between border-b border-border bg-card px-6 ">
           <h2 className="text-xl font-bold">{activePage}</h2>
           <div className="flex items-center gap-3">
             <ThemeToggle />

@@ -12,8 +12,8 @@ function ProtectedRoute({ children, role }) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F7F5] dark:bg-[#0B0B0B]">
-        <div className="rounded-2xl border border-gray-200 bg-white px-6 py-4 dark:border-[#2A2A2A] dark:bg-[#171717]">
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="rounded-2xl border border-border bg-card px-6 py-4 ">
           Loading CabX...
         </div>
       </div>

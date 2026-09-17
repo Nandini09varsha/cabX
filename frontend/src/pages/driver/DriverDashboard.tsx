@@ -47,7 +47,7 @@ function DriverDashboard() {
   return (
     <DriverLayout activePage="Dashboard">
       <div className="mb-6">
-        <p className="text-sm text-gray-500 dark:text-gray-400">Welcome back</p>
+        <p className="text-sm text-muted-foreground">Welcome back</p>
         <h1 className="mt-1 text-2xl font-black sm:text-3xl">
           Ready to drive, {user?.name?.split(" ")[0] || "Driver"}?
         </h1>
@@ -55,42 +55,42 @@ function DriverDashboard() {
       <WalletBar />
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-2xl border border-border bg-card p-5 ">
           <div className="mb-4 flex items-center justify-between">
-            <Wallet size={20} className="text-[#C9A000]" />
+            <Wallet size={20} className="text-primary" />
             <TrendingUp size={18} className="text-green-500" />
           </div>
-          <p className="text-sm text-gray-500">Escrow earnings</p>
+          <p className="text-sm text-muted-foreground">Escrow earnings</p>
           <p className="mt-1 text-2xl font-black">{formatFare(earnings.total)}</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-2xl border border-border bg-card p-5 ">
           <Car size={20} />
-          <p className="mt-4 text-sm text-gray-500">Completed rides</p>
+          <p className="mt-4 text-sm text-muted-foreground">Completed rides</p>
           <p className="mt-1 text-2xl font-black">{earnings.completedRides || 0}</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-2xl border border-border bg-card p-5 ">
           <Star size={20} />
-          <p className="mt-4 text-sm text-gray-500">Driver rating</p>
+          <p className="mt-4 text-sm text-muted-foreground">Driver rating</p>
           <p className="mt-1 text-2xl font-black">{Number(user?.rating || 0).toFixed(1)}</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+        <div className="rounded-2xl border border-border bg-card p-5 ">
           <Check size={20} />
-          <p className="mt-4 text-sm text-gray-500">Verified</p>
+          <p className="mt-4 text-sm text-muted-foreground">Verified</p>
           <p className="mt-1 text-2xl font-black">{profile?.isVerified ? "Yes" : "No"}</p>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-[#2A2A2A] dark:bg-[#171717]">
+      <div className="rounded-2xl border border-border bg-card p-5 ">
         <h2 className="font-bold">Latest open request</h2>
         {openRide ? (
           <div className="mt-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F5C518] font-bold">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary font-bold">
                 {initials(openRide.rider?.name)}
               </div>
               <div>
                 <p className="font-semibold">{openRide.rider?.name || "Rider"}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {openRide.source} → {openRide.destination}
                 </p>
               </div>
@@ -99,14 +99,14 @@ function DriverDashboard() {
             <div className="mt-4 grid grid-cols-2 gap-3">
               <button
                 onClick={() => navigate("/driver/requests")}
-                className="rounded-xl border px-4 py-3 text-sm font-bold dark:border-[#333]"
+                className="rounded-xl border px-4 py-3 text-sm font-bold "
               >
                 View all
               </button>
               <button
                 onClick={accept}
                 disabled={busy}
-                className="flex items-center justify-center gap-2 rounded-xl bg-[#F5C518] px-4 py-3 text-sm font-bold text-black"
+                className="flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
               >
                 <Navigation size={16} />
                 {busy ? "Signing..." : "Accept ride"}
@@ -114,7 +114,7 @@ function DriverDashboard() {
             </div>
           </div>
         ) : (
-          <p className="mt-3 text-sm text-gray-500">No open ride requests right now.</p>
+          <p className="mt-3 text-sm text-muted-foreground">No open ride requests right now.</p>
         )}
       </div>
     </DriverLayout>

@@ -11,7 +11,7 @@ export default function StatusBadge({ status }) {
   return (
     <span
       className={`inline-flex rounded-full px-3 py-1 text-xs font-bold capitalize ${
-        styles[status] || "bg-gray-100 text-gray-600 dark:bg-[#222] dark:text-gray-300"
+        styles[status] || "bg-muted text-muted-foreground"
       }`}
     >
       {label}
