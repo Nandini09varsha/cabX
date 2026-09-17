@@ -1,4 +1,4 @@
-import { PublicKey } from "@solana/web3.ts";
+import { PublicKey } from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
 import { programId } from "../config/solana.ts";
 

@@ -1,4 +1,4 @@
-import { Transaction } from "@solana/web3.ts";
+import { Transaction } from "@solana/web3.js";
 import { connection } from "../config/solana.ts";
 
 export async function buildUnsignedTransaction({

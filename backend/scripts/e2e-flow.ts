@@ -6,7 +6,7 @@ import {
   PublicKey,
   Transaction,
   sendAndConfirmTransaction,
-} from "@solana/web3.ts";
+} from "@solana/web3.js";
 import {
   TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
@@ -155,7 +155,7 @@ async function main() {
   });
   console.log("users + wallets linked");
 
-  const { PublicKey: PK } = await import("@solana/web3.ts");
+  const { PublicKey: PK } = await import("@solana/web3.js");
   const adminPda = PK.findProgramAddressSync(
     [Buffer.from("admin_state")],
     new PK(process.env.PROGRAM_ID),

@@ -1,5 +1,5 @@
 import { BN } from "@coral-xyz/anchor";
-import { Keypair, PublicKey, SystemProgram } from "@solana/web3.ts";
+import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import {
   ACCOUNT_SIZE,
   TOKEN_PROGRAM_ID,

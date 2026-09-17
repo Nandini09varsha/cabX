@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { PublicKey } from "@solana/web3.ts";
+import { PublicKey } from "@solana/web3.js";
 import User from "../models/User.ts";
 import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
 
