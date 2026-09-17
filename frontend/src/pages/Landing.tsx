@@ -38,7 +38,7 @@ function Landing() {
               </Link>
             </div>
           </div>
-          <div className="relative overflow-hidden rounded-[2rem] bg-ink p-6 shadow-[0_24px_60px_rgba(28,25,20,0.18)] sm:p-8">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-border bg-muted p-6 shadow-[0_24px_60px_rgba(28,25,20,0.12)] sm:p-8">
             <LiveMap />
           </div>
         </div>
@@ -51,7 +51,7 @@ function Landing() {
           <Stat value="Web3" label="Powered rides" />
         </div>
       </section>
-      <section id="features" className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
+      <section id="features" className="scroll-mt-24 mx-auto max-w-7xl px-6 py-24 lg:px-8">
         <div className="max-w-2xl">
           <p className="text-sm font-bold uppercase tracking-widest text-primary">Why CabX</p>
           <h2 className="mt-3 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
@@ -65,13 +65,13 @@ function Landing() {
           <FeatureCard icon={<Wallet />} title="Decentralized" description="Blockchain-powered settlement gives riders and drivers greater transparency." />
         </div>
       </section>
-      <section id="how-it-works" className="bg-ink px-6 py-24 text-ink-foreground">
+      <section id="how-it-works" className="scroll-mt-24 border-y border-border bg-muted px-6 py-24 text-foreground">
         <div className="mx-auto max-w-7xl">
           <p className="text-sm font-bold uppercase tracking-widest text-primary">How it works</p>
           <h2 className="mt-3 max-w-2xl text-4xl font-extrabold tracking-tight sm:text-5xl">
             From pickup to destination in three simple steps.
           </h2>
-          <div className="mt-16 grid gap-10 md:grid-cols-3">
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
             <Step number="01" title="Choose your destination" description="Enter your pickup point and destination to see available ride options." />
             <Step number="02" title="Get matched" description="CabX finds a nearby driver and connects you in real time." />
             <Step number="03" title="Ride & pay" description="Lock the fare in Solana escrow, then a driver accepts and completes the trip on-chain." />
@@ -79,14 +79,14 @@ function Landing() {
         </div>
       </section>
       <section className="bg-background px-6 py-24">
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-ink px-8 py-16 text-center text-ink-foreground sm:px-16">
-          <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Ready to move?</h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-ink-foreground/70">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-border bg-card px-8 py-16 text-center sm:px-16">
+          <h2 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">Ready to move?</h2>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
             Join CabX and experience a smarter, more transparent way to ride.
           </p>
           <Link
             to="/register"
-            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-7 py-4 font-semibold text-primary-foreground transition-colors hover:bg-card hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-7 py-4 font-semibold text-primary-foreground transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Get started
             <ArrowRight size={18} />
@@ -126,10 +126,10 @@ function FeatureCard({ icon, title, description }) {
 
 function Step({ number, title, description }) {
   return (
-    <div>
+    <div className="rounded-2xl border border-border bg-card p-7">
       <p className="text-5xl font-extrabold text-primary">{number}</p>
-      <h3 className="mt-5 text-2xl font-bold">{title}</h3>
-      <p className="mt-3 max-w-sm leading-7 text-ink-foreground/65">{description}</p>
+      <h3 className="mt-5 text-2xl font-bold text-foreground">{title}</h3>
+      <p className="mt-3 max-w-sm leading-7 text-muted-foreground">{description}</p>
     </div>
   );
 }

@@ -30,7 +30,7 @@ function DriverProfile() {
         <div className="h-28 bg-primary" />
         <div className="px-5 pb-6 sm:px-7">
           <div className="-mt-12 flex items-end gap-4">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-card bg-ink text-3xl font-black text-primary">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-card bg-muted text-3xl font-black text-primary">
               {user?.name?.[0]?.toUpperCase() || "D"}
             </div>
             <div className="pb-1">

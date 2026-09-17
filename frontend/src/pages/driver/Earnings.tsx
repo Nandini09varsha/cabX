@@ -21,10 +21,10 @@ function Earnings() {
       <h1 className="text-2xl font-black sm:text-3xl">Earnings</h1>
       <p className="mt-1 mb-6 text-sm text-muted-foreground">Escrow releases paid to your token account.</p>
       {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
-      <div className="mb-6 overflow-hidden rounded-2xl bg-ink p-6 text-ink-foreground sm:p-8">
-        <p className="text-sm text-ink-foreground/65">Total released</p>
+      <div className="mb-6 overflow-hidden rounded-2xl border border-border bg-card p-6 text-foreground sm:p-8">
+        <p className="text-sm text-muted-foreground">Total released</p>
         <p className="mt-2 text-4xl font-black text-primary">{formatFare(data.total)}</p>
-        <p className="mt-2 text-sm text-ink-foreground/65">{data.completedRides} completed rides</p>
+        <p className="mt-2 text-sm text-muted-foreground">{data.completedRides} completed rides</p>
       </div>
       {data.payments?.length ? (
         <div className="space-y-3">
