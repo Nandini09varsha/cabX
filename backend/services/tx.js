@@ -7,7 +7,7 @@ export async function buildUnsignedTransaction({
   extraSigners = [],
 }) {
   const { blockhash, lastValidBlockHeight } =
-    await connection.getLatestBlockhash("confirmed");
+    await connection.getLatestBlockhash("finalized");
   const tx = new Transaction({
     feePayer,
     blockhash,
