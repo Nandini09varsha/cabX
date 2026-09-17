@@ -17,6 +17,7 @@ import {
 const router = express.Router();
 
 router.get("/", protect, listDrivers);
+router.get("/me", protect, authorizeRoles("driver"), getDriverMe);
 router.post(
   "/:driverId/votes",
   protect,
@@ -25,8 +26,6 @@ router.post(
 );
 
 router.use(protect, authorizeRoles("driver"), requireWallet);
-
-router.get("/me", getDriverMe);
 router.put("/availability", updateAvailability);
 router.post("/register", registerDriver);
 router.post("/register/confirm", confirmDriverRegister);

@@ -1,5 +1,5 @@
 export const PROGRAM_ID =
-  process.env.PROGRAM_ID || "H7zV5vcQmbnoLib3oUbVSHyhMjKU2BRLSpP9zbFTH4oG";
+  process.env.PROGRAM_ID || "BJBT5B3gFzmvsdobjmD5HxZgNkovwic4gpsea6HwBZif";
 
 export const MIN_STAKE = Number(process.env.MIN_STAKE || 1_000_000);
 

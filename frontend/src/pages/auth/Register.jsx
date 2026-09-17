@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useAuth } from "../../context/AuthContext";
+import { apiError } from "../../lib/format";
 
 function Register() {
   const { register } = useAuth();
@@ -43,11 +44,13 @@ function Register() {
 
       if (form.role === "driver") {
         navigate("/driver");
+      } else if (form.role === "admin") {
+        navigate("/admin");
       } else {
         navigate("/rider");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(apiError(err, "Registration failed"));
     } finally {
       setLoading(false);
     }
@@ -73,7 +76,7 @@ function Register() {
               Register as
             </label>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => handleRoleChange("rider")}
@@ -83,7 +86,7 @@ function Register() {
                     : "border-gray-300 bg-transparent text-gray-600 dark:border-[#333] dark:text-gray-300"
                 }`}
               >
-                🚕 Rider
+                Rider
               </button>
 
               <button
@@ -95,7 +98,19 @@ function Register() {
                     : "border-gray-300 bg-transparent text-gray-600 dark:border-[#333] dark:text-gray-300"
                 }`}
               >
-                🚗 Driver
+                Driver
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRoleChange("admin")}
+                className={`rounded-xl border px-4 py-3 text-sm font-semibold transition ${
+                  form.role === "admin"
+                    ? "border-[#F5C518] bg-[#F5C518] text-black"
+                    : "border-gray-300 bg-transparent text-gray-600 dark:border-[#333] dark:text-gray-300"
+                }`}
+              >
+                Admin
               </button>
             </div>
           </div>

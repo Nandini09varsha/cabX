@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useAuth } from "../../context/AuthContext";
+import { apiError } from "../../lib/format";
 
 function Login() {
   const { login } = useAuth();
@@ -32,7 +33,7 @@ function Login() {
         navigate("/rider");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(apiError(err, "Login failed"));
     } finally {
       setLoading(false);
     }

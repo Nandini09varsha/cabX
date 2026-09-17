@@ -28,8 +28,7 @@ function Landing() {
             </h1>
 
             <p className="mt-7 max-w-xl text-lg leading-8 text-gray-600 dark:text-gray-300">
-              CabX connects riders and drivers through a secure, transparent and
-              decentralized ride-hailing experience.
+              CabX connects riders and drivers with on-chain escrow. Lock a fare, accept a ride, then settle when the trip completes.
             </p>
 
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
@@ -169,7 +168,7 @@ function Landing() {
             <Step
               number="03"
               title="Ride & pay"
-              description="Complete your ride and settle the payment securely."
+              description="Lock the fare in Solana escrow, then a driver accepts and completes the trip on-chain."
             />
           </div>
         </div>

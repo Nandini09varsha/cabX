@@ -11,6 +11,7 @@ import RideDetails from "./pages/rider/RideDetails";
 import Payments from "./pages/rider/Payments";
 import Profile from "./pages/rider/Profile";
 import Settings from "./pages/rider/Settings";
+import Drivers from "./pages/rider/Drivers";
 
 import DriverDashboard from "./pages/driver/DriverDashboard";
 import RideRequests from "./pages/driver/RideRequests";
@@ -18,16 +19,20 @@ import CurrentRide from "./pages/driver/CurrentRide";
 
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
+import { WalletProvider } from "./context/WalletContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RideHistory from "./pages/driver/RideHistory";
 import Earnings from "./pages/driver/Earnings";
 import DriverProfile from "./pages/driver/DriverProfile";
 import DriverSettings from "./pages/driver/DriverSettings";
+import RegisterDriver from "./pages/driver/RegisterDriver";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
+        <WalletProvider>
         <BrowserRouter>
           <Routes>
             {/* Public routes */}
@@ -86,6 +91,15 @@ function App() {
   element={
     <ProtectedRoute role="rider">
       <Payments />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/rider/drivers"
+  element={
+    <ProtectedRoute role="rider">
+      <Drivers />
     </ProtectedRoute>
   }
 />
@@ -155,6 +169,15 @@ function App() {
             />
 
             <Route
+              path="/driver/register"
+              element={
+                <ProtectedRoute role="driver">
+                  <RegisterDriver />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
               path="/driver/profile"
               element={
                 <ProtectedRoute role="driver">
@@ -171,8 +194,27 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/admin/drivers"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
+        </WalletProvider>
       </AuthProvider>
     </ThemeProvider>
   );

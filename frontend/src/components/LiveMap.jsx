@@ -66,12 +66,12 @@ function LiveMap() {
       </MapContainer>
 
       {/* Ride Card */}
-      <div className="absolute bottom-5 left-5 right-5 z-[1000] rounded-2xl bg-white p-5 shadow-xl">
+      <div className="absolute bottom-5 left-5 right-5 z-[1000] rounded-2xl bg-white p-5 shadow-xl dark:bg-[#111] dark:text-white">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-gray-500">Estimated fare</p>
 
-            <p className="mt-1 text-2xl font-black text-[#0B0B0B]">₹248</p>
+            <p className="mt-1 text-2xl font-black text-[#0B0B0B] dark:text-white">₹248</p>
           </div>
 
           <div className="rounded-full bg-[#F5C518] px-4 py-2 text-sm font-bold text-black">

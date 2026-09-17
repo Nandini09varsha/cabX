@@ -8,7 +8,7 @@ function Input({ label, error, className = "", ...props }) {
       )}
 
       <input
-        className={`w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-[#0B0B0B] outline-none transition focus:border-[#F5C518] dark:border-[#333333] dark:bg-[#171717] dark:text-white ${className}`}
+        className={`w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-[#0B0B0B] outline-none transition focus:border-[#F5C518] dark:border-[#333333] dark:bg-[#111111] dark:text-white ${className}`}
         {...props}
       />
 

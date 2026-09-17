@@ -14,9 +14,11 @@ import {
 import DriverLayout from "../../components/driver/DriverLayout";
 import ThemeToggle from "../../components/ThemeToggle";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function DriverSettings() {
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const [notifications, setNotifications] = useState({
     rideRequests: true,
@@ -220,9 +222,7 @@ function DriverSettings() {
               icon={<UserRound size={18} />}
               title="Profile"
               description="View and update your driver profile."
-              onClick={() => {
-                window.location.href = "/driver/profile";
-              }}
+              onClick={() => navigate("/driver/profile")}
             />
 
             <SettingsLink
@@ -230,7 +230,10 @@ function DriverSettings() {
               title="Logout"
               description="Sign out from your CabX driver account."
               danger
-              onClick={logout}
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
             />
           </div>
         </section>

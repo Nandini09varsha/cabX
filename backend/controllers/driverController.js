@@ -29,6 +29,14 @@ async function getOrCreateProfile(user) {
 }
 
 export const getDriverMe = asyncHandler(async (req, res) => {
+  if (!req.user.walletAddress) {
+    return res.status(200).json({
+      user: req.user,
+      driver: null,
+      onchain: null,
+    });
+  }
+
   const profile = await getOrCreateProfile(req.user);
   await syncDriverFromChain(profile);
   const onchain = serializeDriverAccount(
