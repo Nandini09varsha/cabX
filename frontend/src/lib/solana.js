@@ -81,7 +81,11 @@ export async function signAndSendBase64(transactionBase64) {
   const phantom = getPhantom();
   const connection = await getConnection();
   const tx = Transaction.from(Buffer.from(transactionBase64, "base64"));
-  const { signature } = await phantom.signAndSendTransaction(tx);
+  // Use signTransaction + sendRaw so backend co-signers (escrow vault) stay intact.
+  const signed = await phantom.signTransaction(tx);
+  const signature = await connection.sendRawTransaction(signed.serialize(), {
+    skipPreflight: false,
+  });
   const latest = await connection.getLatestBlockhash("confirmed");
   await connection.confirmTransaction(
     {
