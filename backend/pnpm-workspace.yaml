@@ -1,0 +1,7 @@
+allowBuilds:
+  # The native websocket accelerators are optional. The pure-JS fallbacks work
+  # for this API, while esbuild is required by the tsx development runner.
+  bigint-buffer: false
+  bufferutil: false
+  esbuild: true
+  utf-8-validate: false
