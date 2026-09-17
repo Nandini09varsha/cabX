@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-ride_hailing = "H7zV5vcQmbnoLib3oUbVSHyhMjKU2BRLSpP9zbFTH4oG"
+ride_hailing = "BJBT5B3gFzmvsdobjmD5HxZgNkovwic4gpsea6HwBZif"
 
 [registry]
 url = "https://api.apr.dev"

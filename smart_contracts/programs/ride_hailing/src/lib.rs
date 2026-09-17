@@ -10,7 +10,7 @@ pub use errors::*;
 pub use instructions::*;
 pub use state::{AdminState, Driver, DriverLocation, Ride, RideStatus, Rider};
 
-declare_id!("H7zV5vcQmbnoLib3oUbVSHyhMjKU2BRLSpP9zbFTH4oG");
+declare_id!("BJBT5B3gFzmvsdobjmD5HxZgNkovwic4gpsea6HwBZif");
 
 #[program]
 pub mod ride_hailing {
