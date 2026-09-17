@@ -1,6 +1,6 @@
-import User from "../models/User.js";
-import Ride from "../models/Ride.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
+import User from "../models/User.ts";
+import Ride from "../models/Ride.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
 
 export const getProfile = asyncHandler(async (req, res) => {
   const rides = await Ride.countDocuments({

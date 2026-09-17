@@ -1,13 +1,13 @@
 import { BN } from "@coral-xyz/anchor";
-import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import { Keypair, PublicKey, SystemProgram } from "@solana/web3.ts";
 import {
   ACCOUNT_SIZE,
   TOKEN_PROGRAM_ID,
   createInitializeAccountInstruction,
 } from "@solana/spl-token";
-import { connection, getPaymentMint, program } from "../config/solana.js";
-import { getDriverPda, getRidePda, toPublicKey } from "./pdas.js";
-import { buildUnsignedTransaction } from "./tx.js";
+import { connection, getPaymentMint, program } from "../config/solana.ts";
+import { getDriverPda, getRidePda, toPublicKey } from "./pdas.ts";
+import { buildUnsignedTransaction } from "./tx.ts";
 
 export async function buildRequestRideTx({
   rider,

@@ -5,8 +5,8 @@ import {
   initializeAdmin,
   slashDriver,
   verifyDriver,
-} from "../controllers/adminController.js";
-import { protect, authorizeRoles, requireWallet } from "../middleware/authMiddleware.js";
+} from "../controllers/adminController.ts";
+import { protect, authorizeRoles, requireWallet } from "../middleware/authMiddleware.ts";
 
 const router = express.Router();
 

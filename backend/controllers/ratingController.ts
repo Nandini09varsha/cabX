@@ -1,8 +1,8 @@
-import Ride from "../models/Ride.js";
-import Rating from "../models/Rating.js";
-import User from "../models/User.js";
-import DriverProfile from "../models/DriverProfile.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
+import Ride from "../models/Ride.ts";
+import Rating from "../models/Rating.ts";
+import User from "../models/User.ts";
+import DriverProfile from "../models/DriverProfile.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
 
 async function recalcRating(userId) {
   const ratings = await Rating.find({ to: userId });

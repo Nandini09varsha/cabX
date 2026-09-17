@@ -14,13 +14,13 @@ import {
   listOpenRides,
   requestRide,
   startRide,
-} from "../controllers/rideController.js";
-import { rateRide } from "../controllers/ratingController.js";
+} from "../controllers/rideController.ts";
+import { rateRide } from "../controllers/ratingController.ts";
 import {
   protect,
   authorizeRoles,
   requireWallet,
-} from "../middleware/authMiddleware.js";
+} from "../middleware/authMiddleware.ts";
 
 const router = express.Router();
 

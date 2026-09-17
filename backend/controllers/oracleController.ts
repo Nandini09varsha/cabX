@@ -1,7 +1,7 @@
-import DriverLocation from "../models/DriverLocation.js";
-import DriverProfile from "../models/DriverProfile.js";
-import Ride from "../models/Ride.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
+import DriverLocation from "../models/DriverLocation.ts";
+import DriverProfile from "../models/DriverProfile.ts";
+import Ride from "../models/Ride.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
 
 function toRad(value) {
   return (value * Math.PI) / 180;

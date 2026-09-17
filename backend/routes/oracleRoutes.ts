@@ -4,12 +4,12 @@ import {
   getRideTracking,
   listNearbyDrivers,
   reportLocation,
-} from "../controllers/oracleController.js";
+} from "../controllers/oracleController.ts";
 import {
   protect,
   authorizeRoles,
   requireWallet,
-} from "../middleware/authMiddleware.js";
+} from "../middleware/authMiddleware.ts";
 
 const router = express.Router();
 

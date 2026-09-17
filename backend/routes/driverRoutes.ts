@@ -6,13 +6,13 @@ import {
   registerDriver,
   updateAvailability,
   voteVerifyDriver,
-} from "../controllers/driverController.js";
-import { getEarnings } from "../controllers/paymentController.js";
+} from "../controllers/driverController.ts";
+import { getEarnings } from "../controllers/paymentController.ts";
 import {
   protect,
   authorizeRoles,
   requireWallet,
-} from "../middleware/authMiddleware.js";
+} from "../middleware/authMiddleware.ts";
 
 const router = express.Router();
 

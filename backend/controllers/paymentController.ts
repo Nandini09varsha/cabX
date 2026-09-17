@@ -1,6 +1,6 @@
-import Payment from "../models/Payment.js";
-import Ride from "../models/Ride.js";
-import { asyncHandler } from "../middleware/errorHandler.js";
+import Payment from "../models/Payment.ts";
+import Ride from "../models/Ride.ts";
+import { asyncHandler } from "../middleware/errorHandler.ts";
 
 export const listPayments = asyncHandler(async (req, res) => {
   const filter =

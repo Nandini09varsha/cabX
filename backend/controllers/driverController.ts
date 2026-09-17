@@ -1,16 +1,16 @@
-import DriverProfile from "../models/DriverProfile.js";
-import VerificationVote from "../models/VerificationVote.js";
-import { MIN_STAKE, VERIFY_VOTE_THRESHOLD } from "../config/constants.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
-import { hashVehicle, bytesToHex } from "../services/hash.js";
+import DriverProfile from "../models/DriverProfile.ts";
+import VerificationVote from "../models/VerificationVote.ts";
+import { MIN_STAKE, VERIFY_VOTE_THRESHOLD } from "../config/constants.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
+import { hashVehicle, bytesToHex } from "../services/hash.ts";
 import {
   buildRegisterDriverTx,
   buildVerifyDriverTx,
   fetchDriverAccount,
   serializeDriverAccount,
-} from "../services/driverProgram.js";
-import { recordPayment, syncDriverFromChain } from "../services/sync.js";
-import { adminKeypair, hasAdminSigner } from "../config/solana.js";
+} from "../services/driverProgram.ts";
+import { recordPayment, syncDriverFromChain } from "../services/sync.ts";
+import { adminKeypair, hasAdminSigner } from "../config/solana.ts";
 
 async function getOrCreateProfile(user) {
   let profile = await DriverProfile.findOne({ user: user._id });

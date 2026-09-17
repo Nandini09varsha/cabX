@@ -2,15 +2,15 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
-import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoutes.js";
-import riderRoutes from "./routes/riderRoutes.js";
-import driverRoutes from "./routes/driverRoutes.js";
-import rideRoutes from "./routes/rideRoutes.js";
-import adminRoutes from "./routes/adminRoutes.js";
-import miscRoutes from "./routes/miscRoutes.js";
-import oracleRoutes from "./routes/oracleRoutes.js";
-import { errorHandler } from "./middleware/errorHandler.js";
+import connectDB from "./config/db.ts";
+import authRoutes from "./routes/authRoutes.ts";
+import riderRoutes from "./routes/riderRoutes.ts";
+import driverRoutes from "./routes/driverRoutes.ts";
+import rideRoutes from "./routes/rideRoutes.ts";
+import adminRoutes from "./routes/adminRoutes.ts";
+import miscRoutes from "./routes/miscRoutes.ts";
+import oracleRoutes from "./routes/oracleRoutes.ts";
+import { errorHandler } from "./middleware/errorHandler.ts";
 
 const app = express();
 

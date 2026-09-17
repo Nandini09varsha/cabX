@@ -1,7 +1,7 @@
-import Ride from "../models/Ride.js";
-import DriverProfile from "../models/DriverProfile.js";
-import { asyncHandler, httpError } from "../middleware/errorHandler.js";
-import { bytesToHex, hashPlace } from "../services/hash.js";
+import Ride from "../models/Ride.ts";
+import DriverProfile from "../models/DriverProfile.ts";
+import { asyncHandler, httpError } from "../middleware/errorHandler.ts";
+import { bytesToHex, hashPlace } from "../services/hash.ts";
 import {
   buildAcceptRideTx,
   buildCancelRideTx,
@@ -10,8 +10,8 @@ import {
   buildStartRideTx,
   fetchRideAccount,
   serializeRideAccount,
-} from "../services/rideProgram.js";
-import { recordPayment, syncRideFromChain } from "../services/sync.js";
+} from "../services/rideProgram.ts";
+import { recordPayment, syncRideFromChain } from "../services/sync.ts";
 
 function riderToken(user, override) {
   const account = override || user.tokenAccount;
